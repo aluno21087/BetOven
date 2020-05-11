@@ -10,10 +10,12 @@ namespace BetOven.Models
     public class Apostas_Jogos
     {
         [Key]
+        //FK para Apostas
         [ForeignKey("Aposta")]
         public int ApostaFK { get; set; }
         public Apostas Aposta { get; set; }
 
+        //FK para Jogos
         [ForeignKey("Jogo")]
         public int JogoFK { get; set; }
         public Jogos Jogo { get; set; }

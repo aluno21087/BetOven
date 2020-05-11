@@ -15,6 +15,7 @@ namespace BetOven.Models
         public DateTime data { get; set; }
         public string estado { get; set; }
 
+        //FK para Users
         [ForeignKey("User")]
         public int UserFK { get; set; }
         public Users User { get; set; }

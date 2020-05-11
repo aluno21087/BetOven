@@ -16,6 +16,7 @@ namespace BetOven.Models
         public string formato_pagamento { get; set; }
         public string origem_deposito { get; set; }
 
+        //FK para Users
         [ForeignKey("User")]
         public int UserFK { get; set; }
         public Users User { get; set; }
