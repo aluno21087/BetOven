@@ -21,49 +21,32 @@ namespace BetOven.Migrations
 
             modelBuilder.Entity("BetOven.Models.Apostas", b =>
                 {
-                    b.Property<int>("NAposta")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Data")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Estado")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Quantia")
-                        .HasColumnType("float");
-
                     b.Property<int>("UserFK")
                         .HasColumnType("int");
-
-                    b.HasKey("NAposta");
-
-                    b.HasIndex("UserFK");
-
-                    b.ToTable("Apostas");
-                });
-
-            modelBuilder.Entity("BetOven.Models.Apostas_Jogos", b =>
-                {
-                    b.Property<int>("ApostaFK")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Descricao")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("JogoFK")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("Data")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Descricao")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Estado")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<double>("Multiplicador")
                         .HasColumnType("float");
 
-                    b.HasKey("ApostaFK");
+                    b.Property<double>("Quantia")
+                        .HasColumnType("float");
+
+                    b.HasKey("UserFK", "JogoFK");
 
                     b.HasIndex("JogoFK");
 
-                    b.ToTable("Apostas_Jogos");
+                    b.ToTable("Apostas");
                 });
 
             modelBuilder.Entity("BetOven.Models.Depositos", b =>
@@ -151,24 +134,15 @@ namespace BetOven.Migrations
 
             modelBuilder.Entity("BetOven.Models.Apostas", b =>
                 {
-                    b.HasOne("BetOven.Models.Users", "User")
-                        .WithMany("ListaApostas")
-                        .HasForeignKey("UserFK")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("BetOven.Models.Apostas_Jogos", b =>
-                {
-                    b.HasOne("BetOven.Models.Apostas", "Aposta")
-                        .WithMany()
-                        .HasForeignKey("ApostaFK")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("BetOven.Models.Jogos", "Jogo")
                         .WithMany()
                         .HasForeignKey("JogoFK")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BetOven.Models.Users", "User")
+                        .WithMany("ListaApostas")
+                        .HasForeignKey("UserFK")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

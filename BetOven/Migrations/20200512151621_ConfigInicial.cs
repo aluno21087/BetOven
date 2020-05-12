@@ -45,16 +45,23 @@ namespace BetOven.Migrations
                 name: "Apostas",
                 columns: table => new
                 {
-                    NAposta = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserFK = table.Column<int>(nullable: false),
+                    JogoFK = table.Column<int>(nullable: false),
                     Quantia = table.Column<double>(nullable: false),
                     Data = table.Column<DateTime>(nullable: false),
                     Estado = table.Column<string>(nullable: true),
-                    UserFK = table.Column<int>(nullable: false)
+                    Descricao = table.Column<string>(nullable: true),
+                    Multiplicador = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Apostas", x => x.NAposta);
+                    table.PrimaryKey("PK_Apostas", x => new { x.UserFK, x.JogoFK });
+                    table.ForeignKey(
+                        name: "FK_Apostas_Jogos_JogoFK",
+                        column: x => x.JogoFK,
+                        principalTable: "Jogos",
+                        principalColumn: "Njogo",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Apostas_Users_UserFK",
                         column: x => x.UserFK,
@@ -86,40 +93,9 @@ namespace BetOven.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Apostas_Jogos",
-                columns: table => new
-                {
-                    ApostaFK = table.Column<int>(nullable: false),
-                    JogoFK = table.Column<int>(nullable: false),
-                    Descricao = table.Column<string>(nullable: true),
-                    Multiplicador = table.Column<double>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Apostas_Jogos", x => x.ApostaFK);
-                    table.ForeignKey(
-                        name: "FK_Apostas_Jogos_Apostas_ApostaFK",
-                        column: x => x.ApostaFK,
-                        principalTable: "Apostas",
-                        principalColumn: "NAposta",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Apostas_Jogos_Jogos_JogoFK",
-                        column: x => x.JogoFK,
-                        principalTable: "Jogos",
-                        principalColumn: "Njogo",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
-                name: "IX_Apostas_UserFK",
+                name: "IX_Apostas_JogoFK",
                 table: "Apostas",
-                column: "UserFK");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Apostas_Jogos_JogoFK",
-                table: "Apostas_Jogos",
                 column: "JogoFK");
 
             migrationBuilder.CreateIndex(
@@ -131,13 +107,10 @@ namespace BetOven.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Apostas_Jogos");
+                name: "Apostas");
 
             migrationBuilder.DropTable(
                 name: "Depositos");
-
-            migrationBuilder.DropTable(
-                name: "Apostas");
 
             migrationBuilder.DropTable(
                 name: "Jogos");
