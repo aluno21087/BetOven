@@ -10,11 +10,11 @@ namespace BetOven.Models
     public class Depositos
     {
         [Key]
-        public int nDeposito { get; set; }
-        public double montante { get; set; }
-        public DateTime data { get; set; }
-        public string formato_pagamento { get; set; }
-        public string origem_deposito { get; set; }
+        public int NDeposito { get; set; }
+        public double Montante { get; set; }
+        public DateTime Data { get; set; }
+        public string Formato_pagamento { get; set; }
+        public string Origem_deposito { get; set; }
 
         //FK para Users
         [ForeignKey("User")]

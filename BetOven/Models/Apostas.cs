@@ -10,10 +10,10 @@ namespace BetOven.Models
     public class Apostas
     {
         [Key]
-        public int nAposta { get; set; }
-        public double quantia { get; set; }
-        public DateTime data { get; set; }
-        public string estado { get; set; }
+        public int NAposta { get; set; }
+        public double Quantia { get; set; }
+        public DateTime Data { get; set; }
+        public string Estado { get; set; }
 
         //FK para Users
         [ForeignKey("User")]

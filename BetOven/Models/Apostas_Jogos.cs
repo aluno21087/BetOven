@@ -20,7 +20,7 @@ namespace BetOven.Models
         public int JogoFK { get; set; }
         public Jogos Jogo { get; set; }
 
-        public string descricao { get; set; }
-        public double multiplicador { get; set; }
+        public string Descricao { get; set; }
+        public double Multiplicador { get; set; }
     }
 }

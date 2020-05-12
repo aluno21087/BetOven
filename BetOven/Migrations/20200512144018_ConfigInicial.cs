@@ -11,16 +11,16 @@ namespace BetOven.Migrations
                 name: "Jogos",
                 columns: table => new
                 {
-                    njogo = table.Column<int>(nullable: false)
+                    Njogo = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    equipaA = table.Column<string>(nullable: true),
-                    equipaB = table.Column<string>(nullable: true),
+                    EquipaA = table.Column<string>(nullable: true),
+                    EquipaB = table.Column<string>(nullable: true),
                     Resultado = table.Column<string>(nullable: true),
-                    datainiciojogo = table.Column<DateTime>(nullable: false)
+                    Datainiciojogo = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Jogos", x => x.njogo);
+                    table.PrimaryKey("PK_Jogos", x => x.Njogo);
                 });
 
             migrationBuilder.CreateTable(
@@ -29,12 +29,12 @@ namespace BetOven.Migrations
                 {
                     UserId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    nome = table.Column<string>(nullable: true),
-                    email = table.Column<string>(nullable: true),
-                    nickname = table.Column<string>(nullable: true),
-                    nacionalidade = table.Column<string>(nullable: true),
-                    datanasc = table.Column<DateTime>(nullable: false),
-                    saldo = table.Column<double>(nullable: false)
+                    Nome = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
+                    Nickname = table.Column<string>(nullable: true),
+                    Nacionalidade = table.Column<string>(nullable: true),
+                    Datanasc = table.Column<DateTime>(nullable: false),
+                    Saldo = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -45,45 +45,45 @@ namespace BetOven.Migrations
                 name: "Apostas",
                 columns: table => new
                 {
-                    nAposta = table.Column<int>(nullable: false)
+                    NAposta = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    quantia = table.Column<double>(nullable: false),
-                    data = table.Column<DateTime>(nullable: false),
-                    estado = table.Column<string>(nullable: true),
+                    Quantia = table.Column<double>(nullable: false),
+                    Data = table.Column<DateTime>(nullable: false),
+                    Estado = table.Column<string>(nullable: true),
                     UserFK = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Apostas", x => x.nAposta);
+                    table.PrimaryKey("PK_Apostas", x => x.NAposta);
                     table.ForeignKey(
                         name: "FK_Apostas_Users_UserFK",
                         column: x => x.UserFK,
                         principalTable: "Users",
                         principalColumn: "UserId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Depositos",
                 columns: table => new
                 {
-                    nDeposito = table.Column<int>(nullable: false)
+                    NDeposito = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    montante = table.Column<double>(nullable: false),
-                    data = table.Column<DateTime>(nullable: false),
-                    formato_pagamento = table.Column<string>(nullable: true),
-                    origem_deposito = table.Column<string>(nullable: true),
+                    Montante = table.Column<double>(nullable: false),
+                    Data = table.Column<DateTime>(nullable: false),
+                    Formato_pagamento = table.Column<string>(nullable: true),
+                    Origem_deposito = table.Column<string>(nullable: true),
                     UserFK = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Depositos", x => x.nDeposito);
+                    table.PrimaryKey("PK_Depositos", x => x.NDeposito);
                     table.ForeignKey(
                         name: "FK_Depositos_Users_UserFK",
                         column: x => x.UserFK,
                         principalTable: "Users",
                         principalColumn: "UserId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -92,8 +92,8 @@ namespace BetOven.Migrations
                 {
                     ApostaFK = table.Column<int>(nullable: false),
                     JogoFK = table.Column<int>(nullable: false),
-                    descricao = table.Column<string>(nullable: true),
-                    multiplicador = table.Column<double>(nullable: false)
+                    Descricao = table.Column<string>(nullable: true),
+                    Multiplicador = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -102,14 +102,14 @@ namespace BetOven.Migrations
                         name: "FK_Apostas_Jogos_Apostas_ApostaFK",
                         column: x => x.ApostaFK,
                         principalTable: "Apostas",
-                        principalColumn: "nAposta",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "NAposta",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Apostas_Jogos_Jogos_JogoFK",
                         column: x => x.JogoFK,
                         principalTable: "Jogos",
-                        principalColumn: "njogo",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Njogo",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

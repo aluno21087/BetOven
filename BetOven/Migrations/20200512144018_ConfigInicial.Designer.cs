@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BetOven.Migrations
 {
     [DbContext(typeof(BetOvenDB))]
-    [Migration("20200511150415_ConfigInicial")]
+    [Migration("20200512144018_ConfigInicial")]
     partial class ConfigInicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,24 +23,24 @@ namespace BetOven.Migrations
 
             modelBuilder.Entity("BetOven.Models.Apostas", b =>
                 {
-                    b.Property<int>("nAposta")
+                    b.Property<int>("NAposta")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("Data")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Estado")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Quantia")
+                        .HasColumnType("float");
+
                     b.Property<int>("UserFK")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("data")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("estado")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("quantia")
-                        .HasColumnType("float");
-
-                    b.HasKey("nAposta");
+                    b.HasKey("NAposta");
 
                     b.HasIndex("UserFK");
 
@@ -52,13 +52,13 @@ namespace BetOven.Migrations
                     b.Property<int>("ApostaFK")
                         .HasColumnType("int");
 
+                    b.Property<string>("Descricao")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("JogoFK")
                         .HasColumnType("int");
 
-                    b.Property<string>("descricao")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("multiplicador")
+                    b.Property<double>("Multiplicador")
                         .HasColumnType("float");
 
                     b.HasKey("ApostaFK");
@@ -70,27 +70,27 @@ namespace BetOven.Migrations
 
             modelBuilder.Entity("BetOven.Models.Depositos", b =>
                 {
-                    b.Property<int>("nDeposito")
+                    b.Property<int>("NDeposito")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("Data")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Formato_pagamento")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Montante")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Origem_deposito")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("UserFK")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("data")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("formato_pagamento")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("montante")
-                        .HasColumnType("float");
-
-                    b.Property<string>("origem_deposito")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("nDeposito");
+                    b.HasKey("NDeposito");
 
                     b.HasIndex("UserFK");
 
@@ -99,24 +99,24 @@ namespace BetOven.Migrations
 
             modelBuilder.Entity("BetOven.Models.Jogos", b =>
                 {
-                    b.Property<int>("njogo")
+                    b.Property<int>("Njogo")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("Datainiciojogo")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EquipaA")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EquipaB")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Resultado")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("datainiciojogo")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("equipaA")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("equipaB")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("njogo");
+                    b.HasKey("Njogo");
 
                     b.ToTable("Jogos");
                 });
@@ -128,22 +128,22 @@ namespace BetOven.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("datanasc")
+                    b.Property<DateTime>("Datanasc")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("email")
+                    b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("nacionalidade")
+                    b.Property<string>("Nacionalidade")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("nickname")
+                    b.Property<string>("Nickname")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("nome")
+                    b.Property<string>("Nome")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("saldo")
+                    b.Property<double>("Saldo")
                         .HasColumnType("float");
 
                     b.HasKey("UserId");
@@ -156,7 +156,7 @@ namespace BetOven.Migrations
                     b.HasOne("BetOven.Models.Users", "User")
                         .WithMany("ListaApostas")
                         .HasForeignKey("UserFK")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -165,13 +165,13 @@ namespace BetOven.Migrations
                     b.HasOne("BetOven.Models.Apostas", "Aposta")
                         .WithMany()
                         .HasForeignKey("ApostaFK")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("BetOven.Models.Jogos", "Jogo")
                         .WithMany()
                         .HasForeignKey("JogoFK")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -180,7 +180,7 @@ namespace BetOven.Migrations
                     b.HasOne("BetOven.Models.Users", "User")
                         .WithMany("ListaDepositos")
                         .HasForeignKey("UserFK")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 #pragma warning restore 612, 618
