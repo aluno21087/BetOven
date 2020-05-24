@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Criar um novo User</h1>
 
 <h4>Users</h4>
 <hr />
@@ -43,14 +43,20 @@
                 <span asp-validation-for="Saldo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <label asp-for="Fotografia" class="control-label"></label>
+                @*<input asp-for="Fotografia" class="form-control" />*@
+                <input type="file" name="fotoUser" accept=".jpeg,.jpg,.png" style="color:blue;" />
+                <span asp-validation-for="Fotografia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Criar" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Regressar à lista</a>
 </div>
 
 @section Scripts {

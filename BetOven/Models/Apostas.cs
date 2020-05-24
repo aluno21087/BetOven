@@ -20,7 +20,7 @@ namespace BetOven.Models
         public int UserFK { get; set; }
         public Users User { get; set; }
 
-        //FK para Users
+        //FK para Jogos
         [ForeignKey("Jogo")]
         public int JogoFK { get; set; }
         public Jogos Jogo { get; set; }

@@ -4,10 +4,10 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Utilizadores</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Criar um novo Utilizador</a>
 </p>
 <table class="table">
     <thead>
@@ -29,6 +29,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Saldo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fotografia)
             </th>
             <th></th>
         </tr>
@@ -55,9 +58,14 @@
                 @Html.DisplayFor(modelItem => item.Saldo)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.UserId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.UserId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.UserId">Delete</a>
+                <a asp-action="Details" asp-route-id="@item.UserId">
+                        <img src="~/Imagens/@item.Fotografia" height="50" alt="imagem do user @item.Nome" title="@item.Nome" />
+                </a>
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.UserId">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.UserId">Detalhes</a> |
+                <a asp-action="Delete" asp-route-id="@item.UserId">Apagar</a>
             </td>
         </tr>
 }

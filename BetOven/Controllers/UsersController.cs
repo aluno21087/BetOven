@@ -7,23 +7,36 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BetOven.Data;
 using BetOven.Models;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
 
 namespace BetOven.Controllers
 {
     public class UsersController : Controller
     {
-        private readonly BetOvenDB db;
+        /// <summary>
+        /// variável que identifica a BD do nosso projeto
+        /// </summary>
+        private readonly BetOvenDB _context;
 
-        public UsersController(BetOvenDB context)
+        /// <summary>
+        /// variável que contém os dados do 'ambiente' do servidor. 
+        /// Em particular, onde estão os ficheiros guardados, no disco rígido do servidor
+        /// </summary>
+        private readonly IWebHostEnvironment _caminho;
+
+        public UsersController(BetOvenDB context, IWebHostEnvironment caminho)
         {
-            db = context;
+            _context = context;
+            _caminho = caminho;
         }
 
         // GET: Users
         public async Task<IActionResult> Index()
         {
             // SELECT * FROM Users
-            return View(await db.Users.ToListAsync());
+            return View(await _context.Users.ToListAsync());
         }
 
         // GET: Users/Details/5
@@ -34,7 +47,7 @@ namespace BetOven.Controllers
                 return NotFound();
             }
             // SELECT * FROM Users WHERE Users.UserId = id
-            var users = await db.Users
+            var users = await _context.Users
                 .FirstOrDefaultAsync(u => u.UserId == id);
             if (users == null)
             {
@@ -55,15 +68,67 @@ namespace BetOven.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserId,Nome,Email,Nickname,Nacionalidade,Datanasc,Saldo")] Users users)
+        public async Task<IActionResult> Create([Bind("UserId,Nome,Email,Nickname,Nacionalidade,Datanasc,Saldo,Fotografia")] Users user, IFormFile fotoUser)
         {
+            // variáveis auxiliares
+            string caminhoCompleto = "";
+            bool haImagem = false;
+
+            if (fotoUser == null) { user.Fotografia = "noUser.png"; }
+            else
+            {
+                if (fotoUser.ContentType=="image/jpeg" || fotoUser.ContentType == "image/jpg" || fotoUser.ContentType == "image/png")
+                {
+                    // o ficheiro é uma imagem válida
+                    // preparar a imagem para ser guardada no disco rígido
+                    // e o seu nome associado ao Utilizador
+                    Guid g;
+                    g = Guid.NewGuid();
+                    string extensao = Path.GetExtension(fotoUser.FileName).ToLower();
+                    string nome = g.ToString() + extensao;
+
+                    // onde guardar o ficheiro
+                    caminhoCompleto = Path.Combine(_caminho.WebRootPath, "Imagens", nome);
+
+                    // associar o nome do ficheiro ao Utilizador 
+                    user.Fotografia = nome;
+
+                    // assinalar que existe imagem e é preciso guardá-la no disco rígido
+                    haImagem = true;
+                }
+                else
+                {
+                    // há imagem, mas não é do tipo correto
+                    user.Fotografia = "noUser.png";
+                }
+            }
+
             if (ModelState.IsValid)
             {
-                db.Add(users);
-                await db.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    _context.Add(user);
+                    await _context.SaveChangesAsync();
+                    if (haImagem)
+                    {
+                        using var stream = new FileStream(caminhoCompleto, FileMode.Create);
+                        await fotoUser.CopyToAsync(stream);
+                    }
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception)
+                {
+
+
+
+                    // falta adicionar aqui a consequência da Exceção 
+
+
+
+
+                }
             }
-            return View(users);
+            return View(user);
         }
 
         // GET: Users/Edit/5
@@ -74,7 +139,7 @@ namespace BetOven.Controllers
                 return NotFound();
             }
 
-            var users = await db.Users.FindAsync(id);
+            var users = await _context.Users.FindAsync(id);
             if (users == null)
             {
                 return NotFound();
@@ -87,7 +152,7 @@ namespace BetOven.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UserId,Nome,Email,Nickname,Nacionalidade,Datanasc,Saldo")] Users users)
+        public async Task<IActionResult> Edit(int id, [Bind("UserId,Nome,Email,Nickname,Nacionalidade,Datanasc,Saldo,Fotografia")] Users users)
         {
             if (id != users.UserId)
             {
@@ -98,8 +163,8 @@ namespace BetOven.Controllers
             {
                 try
                 {
-                    db.Update(users);
-                    await db.SaveChangesAsync();
+                    _context.Update(users);
+                    await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -125,7 +190,7 @@ namespace BetOven.Controllers
                 return NotFound();
             }
 
-            var users = await db.Users
+            var users = await _context.Users
                 .FirstOrDefaultAsync(m => m.UserId == id);
             if (users == null)
             {
@@ -140,15 +205,15 @@ namespace BetOven.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var users = await db.Users.FindAsync(id);
-            db.Users.Remove(users);
-            await db.SaveChangesAsync();
+            var users = await _context.Users.FindAsync(id);
+            _context.Users.Remove(users);
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool UsersExists(int id)
         {
-            return db.Users.Any(e => e.UserId == id);
+            return _context.Users.Any(e => e.UserId == id);
         }
     }
 }
