@@ -116,15 +116,9 @@ namespace BetOven.Controllers
                     }
                     return RedirectToAction(nameof(Index));
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
-
-
-                    // falta adicionar aqui a consequência da Exceção 
-
-
-
+                    Console.WriteLine(e.StackTrace);
 
                 }
             }
