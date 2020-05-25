@@ -39,7 +39,7 @@ namespace BetOven.Models
         /// Data em que se inicia o Jogo
         /// </summary>
         [DataType(DataType.Date)]
-        [Display(Name = "Data de início do jogo")]
+        [Display(Name = "Data de início")]
         public DateTime Datainiciojogo { get; set; }
     }
 }
