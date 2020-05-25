@@ -1,0 +1,53 @@
+﻿@model IEnumerable<BetOven.Models.Jogos>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EquipaA)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EquipaB)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Resultado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Datainiciojogo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EquipaA)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EquipaB)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Resultado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Datainiciojogo)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Njogo">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Njogo">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Njogo">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

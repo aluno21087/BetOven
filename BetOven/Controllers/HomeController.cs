@@ -27,6 +27,11 @@ namespace BetOven.Controllers
         {
             return View();
         }
+        
+        public IActionResult Jogos()
+        {
+            return View();
+        }
 
         public IActionResult Privacy()
         {
