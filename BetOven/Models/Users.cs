@@ -36,6 +36,7 @@ namespace BetOven.Models
         /// E-mail do Utilizador
         /// </summary>
         [EmailAddress]
+        [Required(ErrorMessage = "O Email é de preenchimento obrigatório")]
         public string Email { get; set; }
 
 
@@ -58,6 +59,7 @@ namespace BetOven.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}")]
         [Display(Name = "Data de Nascimento")]
+        [Required]
         public DateTime Datanasc { get; set; }
 
         public double Saldo { get; set; }
