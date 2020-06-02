@@ -66,7 +66,7 @@ namespace BetOven.Models
 
         public string Fotografia { get; set; }
 
-        public ICollection<Depositos> ListaDepositos { get; set; } //lista de depósitos feitos na conta do utilizador
-        public ICollection<Apostas> ListaApostas { get; set; } //lista de apostas feitas pelo utilizador
+        public virtual ICollection<Depositos> ListaDepositos { get; set; } //lista de depósitos feitos na conta do utilizador
+        public virtual ICollection<Apostas> ListaApostas { get; set; } //lista de apostas feitas pelo utilizador
     }
 }

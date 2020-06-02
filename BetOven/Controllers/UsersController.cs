@@ -40,6 +40,13 @@ namespace BetOven.Controllers
         }
 
         // GET: Users/Details/5
+        /// <summary>
+        /// Mostra os detalhes de um User
+        /// Se houverem, então mostra os detalhes dos depósitos associados ao mesmo
+        /// Pesquisa em 'Lazy Loading'
+        /// </summary>
+        /// <param name="id">Identificação do User</param>
+        /// <returns></returns>
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -47,8 +54,7 @@ namespace BetOven.Controllers
                 return NotFound();
             }
             // SELECT * FROM Users WHERE Users.UserId = id
-            var users = await _context.Users
-                .FirstOrDefaultAsync(u => u.UserId == id);
+            var users = await _context.Users.FirstOrDefaultAsync(u => u.UserId == id);
             if (users == null)
             {
                 return NotFound();

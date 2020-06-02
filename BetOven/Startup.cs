@@ -30,9 +30,11 @@ namespace BetOven
 
             //****************************************************************************
             // especificação do 'tipo' e 'localização' da BD
-            services.AddDbContext<BetOvenDB>(options =>
-               options.UseSqlServer(
-                   Configuration.GetConnectionString("ConnectionDB")));
+            services.AddDbContext<BetOvenDB>(options => options
+                        .UseSqlServer(Configuration.GetConnectionString("ConnectionDB"))
+                        .UseLazyLoadingProxies()
+                        
+            );
             //****************************************************************************
 
         }

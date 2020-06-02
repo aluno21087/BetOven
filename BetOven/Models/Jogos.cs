@@ -11,6 +11,12 @@ namespace BetOven.Models
     /// </summary>
     public class Jogos
     {
+        public Jogos()
+        {
+            ListaApostas = new HashSet<Apostas>();
+        }
+
+
         /// <summary>
         /// Identificador do Jogo, será PK na tabela Jogos
         /// </summary>
@@ -41,5 +47,8 @@ namespace BetOven.Models
         [DataType(DataType.Date)]
         [Display(Name = "Data de início")]
         public DateTime Datainiciojogo { get; set; }
+
+
+        public virtual ICollection<Apostas> ListaApostas { get; set; } //lista de apostas feitas num jogo
     }
 }

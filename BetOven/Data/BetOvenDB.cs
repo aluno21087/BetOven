@@ -16,10 +16,10 @@ namespace BetOven.Data
         public BetOvenDB(DbContextOptions<BetOvenDB> options) : base(options) { }
 
         //adição das tabelas à BD
-        public DbSet<Users> Users { get; set; }
-        public DbSet<Apostas> Apostas { get; set; }
-        public DbSet<Jogos> Jogos { get; set; }
-        public DbSet<Depositos> Depositos { get; set; }
+        public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<Apostas> Apostas { get; set; }
+        public virtual DbSet<Jogos> Jogos { get; set; }
+        public virtual DbSet<Depositos> Depositos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

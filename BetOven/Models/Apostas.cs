@@ -18,11 +18,11 @@ namespace BetOven.Models
         //FK para Users
         [ForeignKey("User")]
         public int UserFK { get; set; }
-        public Users User { get; set; }
+        public virtual Users User { get; set; }
 
         //FK para Jogos
         [ForeignKey("Jogo")]
         public int JogoFK { get; set; }
-        public Jogos Jogo { get; set; }
+        public virtual Jogos Jogo { get; set; }
     }
 }

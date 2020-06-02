@@ -48,6 +48,6 @@ namespace BetOven.Models
         [ForeignKey("User")]
         [Display(Name = "Utilizador")]
         public int UserFK { get; set; }
-        public Users User { get; set; }
+        public virtual Users User { get; set; }
     }
 }
