@@ -68,5 +68,10 @@ namespace BetOven.Models
 
         public virtual ICollection<Depositos> ListaDepositos { get; set; } //lista de depósitos feitos na conta do utilizador
         public virtual ICollection<Apostas> ListaApostas { get; set; } //lista de apostas feitas pelo utilizador
+
+        //*****************************************************************************************************
+
+        public string UsernameID { get; set; }
+
     }
 }
