@@ -74,7 +74,7 @@ namespace BetOven.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserId,Nome,Email,Nickname,Nacionalidade,Datanasc,Saldo,Fotografia")] Utilizadores user, IFormFile fotoUser)
+        public async Task<IActionResult> Create([Bind("UserID, Nome, Email, Nickname, Nacionalidade, Datanasc, Saldo, Fotografia")] Utilizadores user, IFormFile fotoUser)
         {
             // variáveis auxiliares
             string caminhoCompleto = "";
@@ -152,23 +152,63 @@ namespace BetOven.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UserId,Nome,Email,Nickname,Nacionalidade,Datanasc,Saldo,Fotografia")] Utilizadores users)
+        public async Task<IActionResult> Edit(int id, [Bind("UserId,Nome,Email,Nickname,Nacionalidade,Datanasc,Saldo,Fotografia")] Utilizadores user, IFormFile fotoUser)
         {
-            if (id != users.UserId)
+            if (id != user.UserId)
             {
                 return NotFound();
+            }
+
+            // variáveis auxiliares
+            string caminhoCompleto = "";
+            bool haImagem = false;
+
+            if (fotoUser == null) { user.Fotografia = "noUser.png"; }
+            else
+            {
+                if (fotoUser.ContentType == "image/jpeg" || fotoUser.ContentType == "image/jpg" || fotoUser.ContentType == "image/png")
+                {
+                    // o ficheiro é uma imagem válida
+                    // preparar a imagem para ser guardada no disco rígido
+                    // e o seu nome associado ao Utilizador
+                    Guid g;
+                    g = Guid.NewGuid();
+                    string extensao = Path.GetExtension(fotoUser.FileName).ToLower();
+                    string nome = g.ToString() + extensao;
+
+                    // onde guardar o ficheiro
+                    caminhoCompleto = Path.Combine(_caminho.WebRootPath, "Imagens", nome);
+
+                    // associar o nome do ficheiro ao Utilizador 
+                    user.Fotografia = nome;
+
+                    // assinalar que existe imagem e é preciso guardá-la no disco rígido
+                    haImagem = true;
+                }
+                else
+                {
+                    // há imagem, mas não é do tipo correto
+                    user.Fotografia = "noUser.png";
+                }
             }
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(users);
+                    _context.Update(user);
                     await _context.SaveChangesAsync();
+                    if (haImagem)
+                    {
+                        using var stream = new FileStream(caminhoCompleto, FileMode.Create);
+                        await fotoUser.CopyToAsync(stream);
+                    }
                 }
+
+                
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UsersExists(users.UserId))
+                    if (!UsersExists(user.UserId))
                     {
                         return NotFound();
                     }
@@ -179,7 +219,7 @@ namespace BetOven.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(users);
+            return View(user);
         }
 
         // GET: Users/Delete/5
