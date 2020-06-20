@@ -6,9 +6,13 @@
 
 <h1>Utilizadores</h1>
 
+
+@if (User.IsInRole("Administrativo")){
 <p>
     <a asp-action="Create">Criar um novo Utilizador</a>
 </p>
+}
+
 <table class="table">
     <thead>
         <tr>
@@ -63,9 +67,13 @@
                 </a>
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.UserId">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.UserId">Detalhes</a> |
-                <a asp-action="Delete" asp-route-id="@item.UserId">Apagar</a>
+                @if (User.Identity.IsAuthenticated) {
+                    <text>
+                        <a asp-action="Edit" asp-route-id="@item.UserId">Editar</a> |
+                        <a asp-action="Details" asp-route-id="@item.UserId">Detalhes</a> |
+                        <a asp-action="Delete" asp-route-id="@item.UserId">Apagar</a>
+                    </text> 
+                }
             </td>
         </tr>
 }

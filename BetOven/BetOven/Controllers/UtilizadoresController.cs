@@ -10,9 +10,12 @@ using BetOven.Models;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace BetOven.Controllers
 {
+    [Authorize]
     public class UtilizadoresController : Controller
     {
         /// <summary>
@@ -26,16 +29,20 @@ namespace BetOven.Controllers
         /// </summary>
         private readonly IWebHostEnvironment _caminho;
 
-        public UtilizadoresController(BetOvenDB context, IWebHostEnvironment caminho)
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public UtilizadoresController(BetOvenDB context, IWebHostEnvironment caminho, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _caminho = caminho;
+            _userManager = userManager;
         }
 
-        // GET: Users
+        // GET: Utilizadores
+        [AllowAnonymous] // este anotador anula o efeito da restrição imposta pelo [Authorize]
         public async Task<IActionResult> Index()
         {
-            // SELECT * FROM Users
+            // SELECT * FROM Utilizadores
             return View(await _context.Utilizadores.ToListAsync());
         }
 
@@ -54,7 +61,8 @@ namespace BetOven.Controllers
                 return NotFound();
             }
             // SELECT * FROM Users WHERE Users.UserId = id
-            var users = await _context.Utilizadores.FirstOrDefaultAsync(u => u.UserId == id);
+            var users = await _context.Utilizadores.Where( u => u.UserId == id )
+                                                   .FirstOrDefaultAsync();
             if (users == null)
             {
                 return NotFound();
@@ -64,6 +72,7 @@ namespace BetOven.Controllers
         }
 
         // GET: Users/Create
+        [Authorize(Roles = "Administrativo")]
         public IActionResult Create()
         {
             return View();
@@ -74,6 +83,7 @@ namespace BetOven.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrativo")]
         public async Task<IActionResult> Create([Bind("UserID, Nome, Email, Nickname, Nacionalidade, Datanasc, Saldo, Fotografia")] Utilizadores user, IFormFile fotoUser)
         {
             // variáveis auxiliares
