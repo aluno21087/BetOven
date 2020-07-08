@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,12 +28,20 @@ namespace BetOven
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<BetOvenDB >(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            //services.AddDefaultIdentity<IdentityUser> // deixei de usar a referência ao Utilizador standard para passar a usar o 'meu' novo utilizador
+                services.AddDefaultIdentity<ApplicationUser>
+                (options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()   // ativa o funcionamento dos ROLES
                 .AddEntityFrameworkStores<BetOvenDB >();
+
+
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddDbContext<Context>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("Context")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

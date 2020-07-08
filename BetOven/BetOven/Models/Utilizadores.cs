@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace BetOven.Models
 {
     /// <summary>
-    /// Representa os dados de um 'User'
+    /// Representa os dados de um 'Utilizador'
     /// </summary>
     public class Utilizadores
     {
