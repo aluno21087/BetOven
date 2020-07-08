@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BetOven.Data;
 using BetOven.Models;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace BetOven.Controllers
 {
@@ -14,9 +17,16 @@ namespace BetOven.Controllers
     {
         private readonly BetOvenDB _context;
 
-        public JogosController(BetOvenDB context)
+        /// <summary>
+        /// variável que contém os dados do 'ambiente' do servidor. 
+        /// Em particular, onde estão os ficheiros guardados, no disco rígido do servidor
+        /// </summary>
+        private readonly IWebHostEnvironment _caminho;
+
+        public JogosController(BetOvenDB context, IWebHostEnvironment caminho)
         {
             _context = context;
+            _caminho = caminho;
         }
 
         // GET: Jogos
@@ -54,15 +64,97 @@ namespace BetOven.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Njogo,EquipaA,EquipaB,Resultado,Datainiciojogo")] Jogos jogos)
+        public async Task<IActionResult> Create([Bind("Njogo,EquipaA,FotografiaA,EquipaB,FotografiaB,Resultado,Datainiciojogo")] Jogos jogo, IFormFile fotoTeamA, IFormFile fotoTeamB)
         {
+            // variáveis auxiliares
+            string caminhoCompleto = "";
+            bool haImagem = false;
+
+            if (fotoTeamA == null) { jogo.FotografiaA = "noTeam.jpg"; }
+            else
+            {
+                if (fotoTeamA.ContentType == "image/jpeg" || fotoTeamA.ContentType == "image/jpg" || fotoTeamA.ContentType == "image/png")
+                {
+                    // o ficheiro é uma imagem válida
+                    // preparar a imagem para ser guardada no disco rígido
+                    // e o seu nome associado à equipa A
+                    Guid g;
+                    g = Guid.NewGuid();
+                    string extensao = Path.GetExtension(fotoTeamA.FileName).ToLower();
+                    string nomeA = g.ToString() + extensao;
+
+                    // onde guardar o ficheiro
+                    caminhoCompleto = Path.Combine(_caminho.WebRootPath, "Imagens", nomeA);
+
+                    // associar o nome do ficheiro à equipaA 
+                    jogo.FotografiaA = nomeA;
+
+                    // assinalar que existe imagem e é preciso guardá-la no disco rígido
+                    haImagem = true;
+                }
+                else
+                {
+                    // há imagem, mas não é do tipo correto
+                    jogo.FotografiaA = "noTeam.png";
+                }
+
+            }
+
+            if (fotoTeamB == null) { jogo.FotografiaB = "noTeam.jpg"; }
+            else
+            {
+                if (fotoTeamB.ContentType == "image/jpeg" || fotoTeamB.ContentType == "image/jpg" || fotoTeamB.ContentType == "image/png")
+                {
+                    // o ficheiro é uma imagem válida
+                    // preparar a imagem para ser guardada no disco rígido
+                    // e o seu nome associado à equipa A
+                    Guid g;
+                    g = Guid.NewGuid();
+                    string extensao = Path.GetExtension(fotoTeamA.FileName).ToLower();
+                    string nomeB = g.ToString() + extensao;
+
+                    // onde guardar o ficheiro
+                    caminhoCompleto = Path.Combine(_caminho.WebRootPath, "Imagens", nomeB);
+
+                    // associar o nome do ficheiro à equipaA 
+                    jogo.FotografiaB = nomeB;
+
+                    // assinalar que existe imagem e é preciso guardá-la no disco rígido
+                    haImagem = true;
+                }
+                else
+                {
+                    // há imagem, mas não é do tipo correto
+                    jogo.FotografiaB = "noTeam.png";
+                }
+
+            }
+
             if (ModelState.IsValid)
             {
-                _context.Add(jogos);
+                try
+                {
+                    _context.Add(jogo);
+                    await _context.SaveChangesAsync();
+                    if (haImagem)
+                    {
+                        using var stream = new FileStream(caminhoCompleto, FileMode.Create);
+                        await fotoTeamA.CopyToAsync(stream);
+                        await fotoTeamB.CopyToAsync(stream);
+                    }
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.StackTrace);
+
+                }
+
+                _context.Add(jogo);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(jogos);
+            return View(jogo);
         }
 
         // GET: Jogos/Edit/5

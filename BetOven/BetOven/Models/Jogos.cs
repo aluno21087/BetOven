@@ -31,10 +31,20 @@ namespace BetOven.Models
         public string EquipaA { get; set; }
 
         /// <summary>
+        /// Fotografia da primeira equipa
+        /// </summary>
+        public string FotografiaA { get; set; }
+
+        /// <summary>
         /// Nome da segunda equipa
         /// </summary>
         [Display(Name = "Equipa B")]
         public string EquipaB { get; set; }
+
+        /// <summary>
+        /// Fotografia da segunda equipa
+        /// </summary>
+        public string FotografiaB { get; set; }
 
         /// <summary>
         /// Resultado do Jogo

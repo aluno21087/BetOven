@@ -18,9 +18,21 @@
                 <span asp-validation-for="EquipaA" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="FotografiaA" class="control-label"></label>
+                @*<input asp-for="Fotografia" class="form-control" />*@
+                <input type="file" name="fotoTeamA" accept=".jpeg,.jpg,.png" style="color:blue;" />
+                <span asp-validation-for="FotografiaA" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="EquipaB" class="control-label"></label>
                 <input asp-for="EquipaB" class="form-control" />
                 <span asp-validation-for="EquipaB" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FotografiaB" class="control-label"></label>
+                @*<input asp-for="Fotografia" class="form-control" />*@
+                <input type="file" name="fotoTeamB" accept=".jpeg,.jpg,.png" style="color:blue;" />
+                <span asp-validation-for="FotografiaB" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Resultado" class="control-label"></label>

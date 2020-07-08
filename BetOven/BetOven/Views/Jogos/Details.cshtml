@@ -10,28 +10,40 @@
     <h4>Jogos</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.EquipaA)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.EquipaA)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FotografiaA)
+        </dt>
+        <dd class="col-sm-10">
+            <img src="~/Imagens/@Model.FotografiaA" height="200" alt="imagem do user @Model.EquipaA" title="@Model.EquipaA" />
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.EquipaB)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.EquipaB)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FotografiaB)
+        </dt>
+        <dd class="col-sm-10">
+            <img src="~/Imagens/@Model.FotografiaB" height="200" alt="imagem do user @Model.EquipaB" title="@Model.EquipaB" />
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Resultado)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Resultado)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Datainiciojogo)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Datainiciojogo)
         </dd>
     </dl>

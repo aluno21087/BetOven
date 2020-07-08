@@ -16,7 +16,13 @@
                 @Html.DisplayNameFor(model => model.EquipaA)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.FotografiaA)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.EquipaB)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FotografiaB)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Resultado)
@@ -28,26 +34,37 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.EquipaA)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EquipaB)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Resultado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Datainiciojogo)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Njogo">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.Njogo">Detalhes</a> |
-                <a asp-action="Delete" asp-route-id="@item.Njogo">Apagar</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EquipaA)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Njogo">
+                        <img src="~/Imagens/@item.FotografiaA" height="60" alt="imagem do user @item.EquipaA" title="@item.EquipaA" />
+                    </a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EquipaB)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Njogo">
+                        <img src="~/Imagens/@item.FotografiaB" height="60" alt="imagem do user @item.EquipaB" title="@item.EquipaB" />
+                    </a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Resultado)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Datainiciojogo)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Njogo">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.Njogo">Detalhes</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Njogo">Apagar</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
