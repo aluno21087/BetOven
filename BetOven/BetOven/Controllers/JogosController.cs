@@ -56,6 +56,7 @@ namespace BetOven.Controllers
         }
 
         // GET: Jogos/Create
+        [Authorize(Roles = "Administrativo")]
         public IActionResult Create()
         {
             return View();
@@ -66,13 +67,14 @@ namespace BetOven.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrativo")]
         public async Task<IActionResult> Create([Bind("Njogo,EquipaA,FotografiaA,EquipaB,FotografiaB,Resultado,Datainiciojogo")] Jogos jogo, IFormFile fotoTeamA, IFormFile fotoTeamB)
         {
             // variáveis auxiliares
             string caminhoCompleto = "";
             bool haImagem = false;
 
-            if (fotoTeamA == null) { jogo.FotografiaA = "noTeam.jpg"; }
+            if (fotoTeamA == null) { jogo.FotoA = "noTeam.jpg"; }
             else
             {
                 if (fotoTeamA.ContentType == "image/jpeg" || fotoTeamA.ContentType == "image/jpg" || fotoTeamA.ContentType == "image/png")
@@ -89,7 +91,7 @@ namespace BetOven.Controllers
                     caminhoCompleto = Path.Combine(_caminho.WebRootPath, "Imagens", nomeA);
 
                     // associar o nome do ficheiro à equipaA 
-                    jogo.FotografiaA = nomeA;
+                    jogo.FotoA = nomeA;
 
                     // assinalar que existe imagem e é preciso guardá-la no disco rígido
                     haImagem = true;
@@ -97,12 +99,12 @@ namespace BetOven.Controllers
                 else
                 {
                     // há imagem, mas não é do tipo correto
-                    jogo.FotografiaA = "noTeam.png";
+                    jogo.FotoA = "noTeam.png";
                 }
 
             }
 
-            if (fotoTeamB == null) { jogo.FotografiaB = "noTeam.jpg"; }
+            if (fotoTeamB == null) { jogo.FotoB = "noTeam.jpg"; }
             else
             {
                 if (fotoTeamB.ContentType == "image/jpeg" || fotoTeamB.ContentType == "image/jpg" || fotoTeamB.ContentType == "image/png")
@@ -119,7 +121,7 @@ namespace BetOven.Controllers
                     caminhoCompleto = Path.Combine(_caminho.WebRootPath, "Imagens", nomeB);
 
                     // associar o nome do ficheiro à equipaA 
-                    jogo.FotografiaB = nomeB;
+                    jogo.FotoB = nomeB;
 
                     // assinalar que existe imagem e é preciso guardá-la no disco rígido
                     haImagem = true;
@@ -127,7 +129,7 @@ namespace BetOven.Controllers
                 else
                 {
                     // há imagem, mas não é do tipo correto
-                    jogo.FotografiaB = "noTeam.png";
+                    jogo.FotoB = "noTeam.png";
                 }
 
             }

@@ -55,8 +55,43 @@ namespace BetOven.Areas.Identity.Pages.Account
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
+        public class DateMinimumAgeAttribute : ValidationAttribute
+        {
+            public DateMinimumAgeAttribute(int minimumAge)
+            {
+                MinimumAge = minimumAge;
+                ErrorMessage = "{0} must be someone at least {1} years of age";
+            }
+
+            public override bool IsValid(object value)
+            {
+                DateTime date;
+                if ((value != null && DateTime.TryParse(value.ToString(), out date)))
+                {
+                    return date.AddYears(MinimumAge) < DateTime.Now;
+                }
+
+                return false;
+            }
+
+            public override string FormatErrorMessage(string name)
+            {
+                return string.Format(ErrorMessageString, name, MinimumAge);
+            }
+
+            public int MinimumAge { get; }
+        }
+
         public class InputModel
         {
+            [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
+            [StringLength(40, ErrorMessage = "O {0} não pode ter mais de {1} caracteres.")]
+            public string Nome { get; set; }
+
+            [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
+            [StringLength(20, ErrorMessage = "O {0} não pode ter mais de {1} caracteres")]
+            public string Nickname { get; set; }
+
             [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
             [EmailAddress]
             [Display(Name = "Email")]
@@ -68,13 +103,19 @@ namespace BetOven.Areas.Identity.Pages.Account
             [Display(Name = "Password")]
             public string Password { get; set; }
 
+            [Required]
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
-            public string Nome { get; set; }
+            [DateMinimumAge(18, ErrorMessage = "Tens de ter mais de {0} anos.")]
+            [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+            [Display(Name = "Data de Nascimento")]
+            [Required]
+            public Nullable<System.DateTime> Datanasc { get; set; }
 
+            public string Fotografia { get; set; }
 
         }
 
@@ -130,12 +171,14 @@ namespace BetOven.Areas.Identity.Pages.Account
                 }
 
                 //criação de um novo utilizador
-                var user = new ApplicationUser {
+                var user = new ApplicationUser
+                {
                     UserName = Input.Email,
                     Email = Input.Email,
                     Nome = Input.Nome,
                     Fotografia = nomeFoto,
-                    Timestamp = DateTime.Now};
+                    Timestamp = DateTime.Now
+                };
 
                 // vai escrever esses dados na Base de Dados
                 var result = await _userManager.CreateAsync(user, Input.Password);

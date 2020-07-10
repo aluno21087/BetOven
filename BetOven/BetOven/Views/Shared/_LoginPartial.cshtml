@@ -9,12 +9,12 @@
         @*<a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Olá @User.Identity.Name!</a>*@
 
         @{ 
-            string nomeUser = (await UserManager.GetUserAsync(User)).Nome;
-            string fotouser = (await UserManager.GetUserAsync(User)).Fotografia;
+            string NomeUser = (await UserManager.GetUserAsync(User)).Nome;
+            string FotoUser = (await UserManager.GetUserAsync(User)).Fotografia;
         }
         <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
-            <img src="~/Imagens/Users/@fotouser" height="30" alt="fotografia do @nomeUser" title="@nomeUser"/>
-            @nomeUser
+            <img src="~/Imagens/Users/@FotoUser" height="30" alt="fotografia do @NomeUser" title="@NomeUser"/>
+            @NomeUser
         </a>
 
     </li>

@@ -16,13 +16,13 @@
                 @Html.DisplayNameFor(model => model.EquipaA)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FotografiaA)
+                @Html.DisplayNameFor(model => model.FotoA)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Resultado)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FotografiaB)
+                @Html.DisplayNameFor(model => model.FotoB)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.EquipaB)
@@ -42,7 +42,7 @@
                 </td>
                 <td>
                     <a asp-action="Details" asp-route-id="@item.Njogo">
-                        <img src="~/Imagens/@item.FotografiaA" height="60" alt="imagem do user @item.EquipaA" title="@item.EquipaA" />
+                        <img src="~/Imagens/@item.FotoA" height="60" alt="imagem do user @item.EquipaA" title="@item.EquipaA" />
                     </a>
                 </td>
                 <td>
@@ -50,7 +50,7 @@
                 </td>
                 <td>
                     <a asp-action="Details" asp-route-id="@item.Njogo">
-                        <img src="~/Imagens/@item.FotografiaB" height="60" alt="imagem do user @item.EquipaB" title="@item.EquipaB" />
+                        <img src="~/Imagens/@item.FotoB" height="60" alt="imagem do user @item.EquipaB" title="@item.EquipaB" />
                     </a>
                 </td>
                 <td>

@@ -33,7 +33,7 @@ namespace BetOven.Models
         /// <summary>
         /// Fotografia da primeira equipa
         /// </summary>
-        public string FotografiaA { get; set; }
+        public string FotoA { get; set; }
 
         /// <summary>
         /// Nome da segunda equipa
@@ -44,7 +44,7 @@ namespace BetOven.Models
         /// <summary>
         /// Fotografia da segunda equipa
         /// </summary>
-        public string FotografiaB { get; set; }
+        public string FotoB { get; set; }
 
         /// <summary>
         /// Resultado do Jogo
