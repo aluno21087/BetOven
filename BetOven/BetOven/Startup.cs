@@ -32,7 +32,7 @@ namespace BetOven
 
             //services.AddDefaultIdentity<IdentityUser> // deixei de usar a referência ao Utilizador standard para passar a usar o 'meu' novo utilizador
                 services.AddDefaultIdentity<ApplicationUser>
-                (options => options.SignIn.RequireConfirmedAccount = true)
+                (options => options.SignIn.RequireConfirmedAccount = false)//--------------------------------------------> para não pedir conta confirmada
                 .AddRoles<IdentityRole>()   // ativa o funcionamento dos ROLES
                 .AddEntityFrameworkStores<BetOvenDB >();
 

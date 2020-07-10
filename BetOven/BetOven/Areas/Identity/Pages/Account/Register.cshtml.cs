@@ -193,8 +193,8 @@ namespace BetOven.Areas.Identity.Pages.Account
                     }
 
 
-
-
+                    
+                    
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -217,13 +217,16 @@ namespace BetOven.Areas.Identity.Pages.Account
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
                     }
+                    
+
+
                 }
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
-
+                    
             // If we got this far, something failed, redisplay form
             return Page();
         }
