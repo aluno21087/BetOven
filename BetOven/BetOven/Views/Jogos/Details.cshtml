@@ -11,22 +11,22 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.EquipaA)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.EquipaA)
-        </dd>
-        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.FotografiaA)
         </dt>
         <dd class="col-sm-10">
             <img src="~/Imagens/@Model.FotografiaA" height="200" alt="imagem da equipa @Model.EquipaA" title="@Model.EquipaA" />
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.EquipaB)
+            @Html.DisplayNameFor(model => model.EquipaA)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.EquipaB)
+            @Html.DisplayFor(model => model.EquipaA)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Resultado)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Resultado)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.FotografiaB)
@@ -35,10 +35,10 @@
             <img src="~/Imagens/@Model.FotografiaB" height="200" alt="imagem da equipa @Model.EquipaB" title="@Model.EquipaB" />
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Resultado)
+            @Html.DisplayNameFor(model => model.EquipaB)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Resultado)
+            @Html.DisplayFor(model => model.EquipaB)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Datainiciojogo)

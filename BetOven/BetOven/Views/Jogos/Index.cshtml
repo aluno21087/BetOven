@@ -19,13 +19,13 @@
                 @Html.DisplayNameFor(model => model.FotografiaA)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EquipaB)
+                @Html.DisplayNameFor(model => model.Resultado)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.FotografiaB)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Resultado)
+                @Html.DisplayNameFor(model => model.EquipaB)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Datainiciojogo)
@@ -46,7 +46,7 @@
                     </a>
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.EquipaB)
+                    @Html.DisplayFor(modelItem => item.Resultado)
                 </td>
                 <td>
                     <a asp-action="Details" asp-route-id="@item.Njogo">
@@ -54,7 +54,7 @@
                     </a>
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Resultado)
+                    @Html.DisplayFor(modelItem => item.EquipaB)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Datainiciojogo)
