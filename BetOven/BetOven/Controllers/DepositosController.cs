@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BetOven.Data;
 using BetOven.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BetOven.Controllers
 {
+    [Authorize]
     public class DepositosController : Controller
     {
         private readonly BetOvenDB _context;

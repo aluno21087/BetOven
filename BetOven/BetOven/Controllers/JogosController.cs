@@ -10,9 +10,11 @@ using BetOven.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BetOven.Controllers
 {
+    [Authorize]
     public class JogosController : Controller
     {
         private readonly BetOvenDB _context;
@@ -150,8 +152,8 @@ namespace BetOven.Controllers
 
                 }
 
-                _context.Add(jogo);
-                await _context.SaveChangesAsync();
+                /*_context.Add(jogo);
+                await _context.SaveChangesAsync();*/
                 return RedirectToAction(nameof(Index));
             }
             return View(jogo);

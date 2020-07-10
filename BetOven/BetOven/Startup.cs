@@ -40,7 +40,7 @@ namespace BetOven
             services.AddControllersWithViews();
             services.AddRazorPages();
 
-            services.AddDbContext<Context>(options =>
+            services.AddDbContext<BetOvenDB>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("Context")));
         }
 

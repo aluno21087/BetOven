@@ -7,14 +7,16 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BetOven.Data;
 using BetOven.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BetOven.Controllers
 {
+    [Authorize]
     public class ApostasController : Controller
     {
-        private readonly Context _context;
+        private readonly BetOvenDB _context;
 
-        public ApostasController(Context context)
+        public ApostasController(BetOvenDB context)
         {
             _context = context;
         }
