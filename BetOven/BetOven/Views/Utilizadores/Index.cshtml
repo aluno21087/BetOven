@@ -63,7 +63,7 @@
             </td>
             <td>
                 <a asp-action="Details" asp-route-id="@item.UserId">
-                        <img src="~/Imagens/@item.Fotografia" height="60" alt="imagem do user @item.Nome" title="@item.Nome" />
+                        <img src="@Url.Content("~/Imagens/Users/")@item.Fotografia" height="60" alt="imagem do user @item.Nome" title="@item.Nome" />
                 </a>
             </td>
             <td>

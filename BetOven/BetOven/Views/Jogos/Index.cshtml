@@ -6,9 +6,12 @@
 
 <h1>Jogos</h1>
 
-<p>
-    <a asp-action="Create">Novo Jogo</a>
-</p>
+@if (User.IsInRole("Administrativo"))
+{
+    <p>
+        <a asp-action="Create">Novo Jogo</a>
+    </p>
+}
 <table class="table">
     <thead>
         <tr>
@@ -42,7 +45,7 @@
                 </td>
                 <td>
                     <a asp-action="Details" asp-route-id="@item.Njogo">
-                        <img src="~/Imagens/@item.FotoA" height="60" alt="imagem do user @item.EquipaA" title="@item.EquipaA" />
+                        <img src="@Url.Content("~/Imagens/")@item.FotoA" height="60" alt="imagem da equipa @item.EquipaA" title="@item.EquipaA" />
                     </a>
                 </td>
                 <td>
@@ -50,7 +53,7 @@
                 </td>
                 <td>
                     <a asp-action="Details" asp-route-id="@item.Njogo">
-                        <img src="~/Imagens/@item.FotoB" height="60" alt="imagem do user @item.EquipaB" title="@item.EquipaB" />
+                        <img src="@Url.Content("~/Imagens/")@item.FotoB" height="60" alt="imagem da equipa @item.EquipaB" title="@item.EquipaB" />
                     </a>
                 </td>
                 <td>

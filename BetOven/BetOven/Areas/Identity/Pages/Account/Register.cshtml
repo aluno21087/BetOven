@@ -1,4 +1,6 @@
-﻿@page
+﻿
+
+@page
 @model RegisterModel
 @{
     ViewData["Title"] = "Registar";
@@ -50,9 +52,9 @@
             <div class="form-group">
                 <label asp-for="Input.Fotografia"></label>
                 <label asp-for="Input.Fotografia">Fotografia</label>
-                <input type="file" name="" accept=".jpeg,.jpg,.png" style="color:blue;" /> @*-----------------------------------------> se der erro, é provavelmente devido
-                                                                                                                                        ao nome "fotoUser", que é igual ao
-                                                                                                                                        do Create.cshtml dos Utilizadores*@
+                <input type="file" name="fotoUser" accept=".jpeg,.jpg,.png" style="color:blue;" /> @*-----------------------------------------> se der erro, é provavelmente devido
+                    ao nome "fotoUser", que é igual ao
+                    do Create.cshtml dos Utilizadores*@
             </div>
             <button type="submit" class="btn btn-primary">Registar</button>
         </form>
