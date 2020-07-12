@@ -28,8 +28,7 @@ namespace BetOven.Models
         /// </summary>
         [Required(ErrorMessage = "O Nome é de preenchimento obrigatório")]
         [StringLength(40, ErrorMessage = "O {0} não pode ter mais de {1} caracteres.")]
-        //[RegularExpression("[A-ZÓÂÍ][a-zçáéíóúàèìòùãõäëïöüâêîôûñ] + (( | d[ao](s)? | e |-|'| d')[A-ZÓÂÍ][a-zçáéíóúàèìòùãõäëïöüâêîôûñ] +){1,3}",
-                            //ErrorMessage = "Deve escrever entre 2 e 4 nomes, começados por uma Maiúscula, seguidos de minúsculas.")]
+        [RegularExpression("[A-ZÓÂÍ][a-zçáéíóúàèìòùãõäëïöüâêîôûñ] + (( | d[ao](s)? | e |-|'| d')[A-ZÓÂÍ][a-zçáéíóúàèìòùãõäëïöüâêîôûñ] +){1,3}",ErrorMessage = "Deve escrever entre 2 e 4 nomes, começados por uma Maiúscula, seguidos de minúsculas.")]
         public string Nome { get; set; }
 
         /// <summary>
@@ -45,7 +44,7 @@ namespace BetOven.Models
         /// </summary>
         [Required(ErrorMessage = "O Nickname é de preenchimento obrigatório")]
         [StringLength(20, ErrorMessage = "O {0} não pode ter mais de {1} caracteres")]
-        //[RegularExpression("^[a-zA-Z0-9]$", ErrorMessage = "Pode escrever um Nickname com letra minúsculas, maiúculas e números. Não pode haver caracteres especiais.")]
+        [RegularExpression("^[a-zA-Z0-9]$", ErrorMessage = "Pode escrever um Nickname com letra minúsculas, maiúculas e números. Não pode haver caracteres especiais.")]
         public string Nickname { get; set; }
 
         /// <summary>
