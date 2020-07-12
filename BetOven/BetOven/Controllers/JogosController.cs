@@ -56,7 +56,7 @@ namespace BetOven.Controllers
         }
 
         // GET: Jogos/Create
-        [Authorize(Roles = "Administrativo")]
+        //[Authorize(Roles = "Administrativo")]
         public IActionResult Create()
         {
             return View();
@@ -67,7 +67,7 @@ namespace BetOven.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrativo")]
+        //[Authorize(Roles = "Administrativo")]
         public async Task<IActionResult> Create([Bind("Njogo,EquipaA,FotografiaA,EquipaB,FotografiaB,Resultado,Datainiciojogo")] Jogos jogo, IFormFile fotoTeamA, IFormFile fotoTeamB)
         {
             // variáveis auxiliares

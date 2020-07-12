@@ -13,6 +13,44 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\assets\js\main.js" />
+    <None Include="wwwroot\assets\vendor\aos\aos.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap\css\bootstrap-grid.css.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\css\bootstrap-grid.min.css.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\css\bootstrap-reboot.css.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\css\bootstrap-reboot.min.css.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\css\bootstrap.css.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\css\bootstrap.min.css.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\js\bootstrap.bundle.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap\js\bootstrap.bundle.js.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\js\bootstrap.bundle.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap\js\bootstrap.bundle.min.js.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\js\bootstrap.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap\js\bootstrap.js.map" />
+    <None Include="wwwroot\assets\vendor\bootstrap\js\bootstrap.min.js" />
+    <None Include="wwwroot\assets\vendor\bootstrap\js\bootstrap.min.js.map" />
+    <None Include="wwwroot\assets\vendor\counterup\counterup.min.js" />
+    <None Include="wwwroot\assets\vendor\font-awesome\css\font-awesome.css.map" />
+    <None Include="wwwroot\assets\vendor\font-awesome\fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\assets\vendor\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <None Include="wwwroot\assets\vendor\icofont\fonts\icofont.woff2" />
+    <None Include="wwwroot\assets\vendor\ionicons\fonts\ionicons.svg" />
+    <None Include="wwwroot\assets\vendor\isotope-layout\isotope.pkgd.js" />
+    <None Include="wwwroot\assets\vendor\isotope-layout\isotope.pkgd.min.js" />
+    <None Include="wwwroot\assets\vendor\jquery.easing\jquery.easing.min.js" />
+    <None Include="wwwroot\assets\vendor\jquery\jquery.min.js" />
+    <None Include="wwwroot\assets\vendor\jquery\jquery.min.map" />
+    <None Include="wwwroot\assets\vendor\owl.carousel\LICENSE" />
+    <None Include="wwwroot\assets\vendor\owl.carousel\owl.carousel.js" />
+    <None Include="wwwroot\assets\vendor\owl.carousel\owl.carousel.min.js" />
+    <None Include="wwwroot\assets\vendor\owl.carousel\README.md" />
+    <None Include="wwwroot\assets\vendor\php-email-form\validate.js" />
+    <None Include="wwwroot\assets\vendor\venobox\venobox.js" />
+    <None Include="wwwroot\assets\vendor\venobox\venobox.min.js" />
+    <None Include="wwwroot\assets\vendor\waypoints\jquery.waypoints.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.3" />
