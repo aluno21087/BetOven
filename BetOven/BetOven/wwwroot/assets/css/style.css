@@ -121,7 +121,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #header.header-transparent {
-  background: transparent;
+  background: #000;
 }
 
 #header.header-scrolled {

@@ -4,6 +4,14 @@
     ViewData["Title"] = "Apostas";
 }
 
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
 <h1>Apostas</h1>
 
 <p>
@@ -37,35 +45,45 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantia)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Data)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Estado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descricao)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Multiplicador)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Jogo.Njogo)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Detalhes</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Apagar</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantia)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Data)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Estado)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descricao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Multiplicador)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Jogo.Njogo)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">Detalhes</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">Apagar</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />

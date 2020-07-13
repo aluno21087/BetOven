@@ -4,6 +4,14 @@
     ViewData["Title"] = "Index";
 }
 
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
 <h1>Depósitos</h1>
 
 <p>
@@ -31,29 +39,39 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Montante)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Data)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Formato_pagamento)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Origem_deposito)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Email)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.NDeposito">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.NDeposito">Detalhes</a> |
-                <a asp-action="Delete" asp-route-id="@item.NDeposito">Apagar</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Montante)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Data)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Formato_pagamento)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Origem_deposito)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Email)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.NDeposito">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.NDeposito">Detalhes</a> |
+                    <a asp-action="Delete" asp-route-id="@item.NDeposito">Apagar</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />

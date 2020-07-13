@@ -4,13 +4,22 @@
     ViewData["Title"] = "Index";
 }
 
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
 <h1>Utilizadores</h1>
 
 
-@if (User.IsInRole("Administrativo")){
-<p>
-    <a asp-action="Create">Criar um novo Utilizador</a>
-</p>
+@if (User.IsInRole("Administrativo"))
+{
+    <p>
+        <a asp-action="Create">Criar um novo Utilizador</a>
+    </p>
 }
 
 <table class="table">
@@ -41,41 +50,52 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nickname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nacionalidade)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Datanasc)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Saldo)
-            </td>
-            <td>
-                <a asp-action="Details" asp-route-id="@item.UserId">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nickname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nacionalidade)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Datanasc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Saldo)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.UserId">
                         <img src="@Url.Content("~/Imagens/Users/")@item.Fotografia" height="60" alt="imagem do user @item.Nome" title="@item.Nome" />
-                </a>
-            </td>
-            <td>
-                @if (User.Identity.IsAuthenticated) {
-                    <text>
-                        <a asp-action="Edit" asp-route-id="@item.UserId">Editar</a> |
-                        <a asp-action="Details" asp-route-id="@item.UserId">Detalhes</a> |
-                        <a asp-action="Delete" asp-route-id="@item.UserId">Apagar</a>
-                    </text> 
-                }
-            </td>
-        </tr>
-}
+                    </a>
+                </td>
+                <td>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <text>
+                            <a asp-action="Edit" asp-route-id="@item.UserId">Editar</a> |
+                            <a asp-action="Details" asp-route-id="@item.UserId">Detalhes</a> |
+                            <a asp-action="Delete" asp-route-id="@item.UserId">Apagar</a>
+                        </text>
+                    }
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
