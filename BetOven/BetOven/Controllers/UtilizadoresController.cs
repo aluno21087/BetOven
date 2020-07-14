@@ -142,6 +142,7 @@ namespace BetOven.Controllers
         }
 
         // GET: Users/Edit/5
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -162,6 +163,7 @@ namespace BetOven.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Edit(int id, [Bind("UserId,Nome,Email,Nickname,Nacionalidade,Datanasc,Saldo,Fotografia")] Utilizadores user, IFormFile fotoUser)
         {
             if (id != user.UserId)
@@ -232,7 +234,9 @@ namespace BetOven.Controllers
             return View(user);
         }
 
-        // GET: Users/Delete/5
+        // GET: Users/Delete/
+        [Authorize(Roles = "Administrador")]
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -253,6 +257,7 @@ namespace BetOven.Controllers
         // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var users = await _context.Utilizadores.FindAsync(id);
