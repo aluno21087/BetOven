@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Details";
+    
 }
 
 <br />
@@ -83,7 +84,7 @@ else
         @foreach (var aposta in Model.ListaApostas)
         {
             <tr>
-                <td>@aposta.Jogo.Njogo</td>
+                <td>@aposta.JogoFK</td>
                 <td>@aposta.Descricao</td>
                 <td>@aposta.Data</td>
                 <td>@aposta.Quantia</td>

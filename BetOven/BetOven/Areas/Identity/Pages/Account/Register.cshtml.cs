@@ -54,39 +54,12 @@ namespace BetOven.Areas.Identity.Pages.Account
 
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
-        public class DateMinimumAgeAttribute : ValidationAttribute
-        {
-            public DateMinimumAgeAttribute(int minimumAge)
-            {
-                MinimumAge = minimumAge;
-                ErrorMessage = "{0} must be someone at least {1} years of age";
-            }
-
-            public override bool IsValid(object value)
-            {
-                DateTime date;
-                if ((value != null && DateTime.TryParse(value.ToString(), out date)))
-                {
-                    return date.AddYears(MinimumAge) < DateTime.Now;
-                }
-
-                return false;
-            }
-
-            public override string FormatErrorMessage(string name)
-            {
-                return string.Format(ErrorMessageString, name, MinimumAge);
-            }
-
-            public int MinimumAge { get; }
-        }
 
         public class InputModel
         {
             [Required(ErrorMessage = "O Nome é de preenchimento obrigatório")]
             [StringLength(40, ErrorMessage = "O {0} não pode ter mais de {1} carateres.")]
-            [RegularExpression("[A-ZÓÂÍ][a-zçáéíóúàèìòùãõäëïöüâêîôûñ]+(( | d[ao](s)? | e |-|'| d')[A-ZÓÂÍ][a-zçáéíóúàèìòùãõäëïöüâêîôûñ]+){1,3}",
-                                ErrorMessage = "Deve escrever entre 2 e 4 nomes, começados por uma Maiúscula, seguidos de minúsculas.")]
+            
             public string Nome { get; set; }
 
             [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
@@ -98,7 +71,7 @@ namespace BetOven.Areas.Identity.Pages.Account
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            [Required(ErrorMessage = "A {0} é de preenchimento obrigatório. Lembrar que a password deve ter no mínimo 1 letra minúscula, 1 letra maiúscula, 1 número e 1 caractere especial.")]
+            
             [StringLength(100, ErrorMessage = "A {0} deve ter entre {2} e {1} caracteres.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
@@ -110,7 +83,6 @@ namespace BetOven.Areas.Identity.Pages.Account
             [Compare("Password", ErrorMessage = "A password e aconfirmation não coincidem")]
             public string ConfirmPassword { get; set; }
 
-            [DateMinimumAge(18, ErrorMessage = "Tens de ter mais de {0} anos.")]
             [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
             [Display(Name = "Data de Nascimento")]
             [Required(ErrorMessage = "A {0} é de preenchimento obrigatório")]

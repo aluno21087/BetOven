@@ -1,7 +1,13 @@
 ﻿@model BetOven.Models.Depositos
 
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<BetOven.Data.ApplicationUser> SignInManager
+@inject UserManager<BetOven.Data.ApplicationUser> UserManager
+
+
 @{
     ViewData["Title"] = "Create";
+    //string EmailUser = (await UserManager.GetUserAsync(User)).Id;
 }
 
 <br />
@@ -24,41 +30,57 @@
                 <span asp-validation-for="Montante" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Data" class="control-label"></label>
-                <input asp-for="Data" class="form-control" />
-                <span asp-validation-for="Data" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Formato_pagamento" class="control-label"></label>
-                <input asp-for="Formato_pagamento" class="form-control" />
+                <label asp-for="Formato_pagamento" class="control-label">Selecione um método de pagamento</label>
+                <select asp-for="Formato_pagamento">
+                    <option value="MultiBanco">MultiBanco</option>
+                    <option value="MB Way">MB Way</option>
+                    <option value="VISA">VISA</option>
+                    <option value="PayPal">PayPal</option>
+                    <option value="PaySafe Card">PaySafe Card</option>
+                    <option value="Master Card">Master Card</option>
+                </select>
                 <span asp-validation-for="Formato_pagamento" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Origem_deposito" class="control-label"></label>
-                <input asp-for="Origem_deposito" class="form-control" />
+                <select asp-for="Origem_deposito">
+                    <option value="Santander Totta">Santander Totta</option>
+                    <option value="Novo Banco">Novo Banco</option>
+                    <option value="Millenium">Millenium</option>
+                    <option value="Banco BIC">Banco BIC</option>
+                    <option value="BBVA">BBVA</option>
+                    <option value="CGD">CGD</option>
+                </select>
                 <span asp-validation-for="Origem_deposito" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="UserFK" class="control-label"></label>
                 <select asp-for="UserFK" class="form-control" asp-items="ViewBag.UserFK"></select>
+                @*<input asp-for="UserFK" class="form-control" type="hidden" value="@EmailUser"/>*@
             </div>
-            <div class="form-group">
-                <input type="submit" value="Criar" class="btn btn-primary" />
+                    <div class="form-group">
+                        <input type="submit" value="Criar" class="btn btn-primary" />
+                    </div>
+
+                </form>
             </div>
-        </form>
-    </div>
-</div>
+        </div>
 
-<div>
-    <a asp-action="Index">Voltar à lista</a>
-</div>
+        <div>
+            <a asp-action="Index">Voltar à lista</a>
+        </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+        @section Scripts {
+            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        }
 
-<br />
-<br />
-<br />
-<br />
-<br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+
+
+
+
+

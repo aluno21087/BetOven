@@ -5,19 +5,20 @@
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
-        <li class="nav-item">
-            @*<a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Olá @User.Identity.Name!</a>*@
+    <li class="nav-item">
+        @*<a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Olá @User.Identity.Name!</a>*@
 
-            @{
-                string NomeUser = (await UserManager.GetUserAsync(User)).Nome;
-                string FotoUser = (await UserManager.GetUserAsync(User)).Fotografia;
-            }
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
-                <img src="@Url.Content("~/Imagens/Users/")@FotoUser" height="30" alt="fotografia do @NomeUser" title="@NomeUser" />
-                @NomeUser
-            </a>
+        @{
+            string NomeUser = (await UserManager.GetUserAsync(User)).Nome;
+            string FotoUser = (await UserManager.GetUserAsync(User)).Fotografia;
+            
+        }
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+            <img src="@Url.Content("~/Imagens/Users/")@FotoUser" height="30" alt="fotografia do @NomeUser" title="@NomeUser" />
+            @NomeUser
+        </a>
 
-        </li>
+    </li>
         <li class="nav-item">
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                 <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
