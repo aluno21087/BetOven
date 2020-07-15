@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BetOven.Data;
 using BetOven.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace BetOven.Controllers
 {
@@ -15,15 +16,20 @@ namespace BetOven.Controllers
     public class ApostasController : Controller
     {
         private readonly BetOvenDB _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ApostasController(BetOvenDB context)
+        public ApostasController(BetOvenDB context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Apostas
         public async Task<IActionResult> Index()
         {
+            /* var user = await _userManager.GetUserAsync(User);
+             var util = await _context.Utilizadores.FirstOrDefaultAsync(a => a.UsernameID == user.Id);
+             ViewBag.Saldo = util.Saldo;*/
             var context = _context.Apostas.Include(a => a.Jogo).Include(a => a.User);
             return View(await context.ToListAsync());
         }
@@ -44,15 +50,20 @@ namespace BetOven.Controllers
             {
                 return NotFound();
             }
-
+            /*var user = await _userManager.GetUserAsync(User);
+            var util = await _context.Utilizadores.FirstOrDefaultAsync(a => a.UsernameID == user.Id);
+            ViewBag.Saldo = util.Saldo;*/
             return View(apostas);
         }
 
         // GET: Apostas/Create
-        public IActionResult Create()
+        public async Task<IActionResult> CreateAsync()
         {
             ViewData["JogoFK"] = new SelectList(_context.Set<Jogos>(), "Njogo", "Njogo");
             ViewData["UserFK"] = new SelectList(_context.Set<Utilizadores>(), "UserId", "Email");
+            /*var user = await _userManager.GetUserAsync(User);
+            var util = await _context.Utilizadores.FirstOrDefaultAsync(a => a.UsernameID == user.Id);
+            ViewBag.Saldo = util.Saldo;*/
             return View();
         }
 
@@ -65,6 +76,10 @@ namespace BetOven.Controllers
         {
             if (ModelState.IsValid)
             {
+                var user = await _userManager.GetUserAsync(User);
+                var util = await _context.Utilizadores.FirstOrDefaultAsync(a => a.UsernameID == user.Id);
+                util.Saldo -= apostas.Quantia;
+                _context.Update(util);
                 _context.Add(apostas);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -89,7 +104,11 @@ namespace BetOven.Controllers
             }
             ViewData["JogoFK"] = new SelectList(_context.Set<Jogos>(), "Njogo", "Njogo", apostas.JogoFK);
             ViewData["UserFK"] = new SelectList(_context.Set<Utilizadores>(), "UserId", "Email", apostas.UserFK);
+            /*var user = await _userManager.GetUserAsync(User);
+            var util = await _context.Utilizadores.FirstOrDefaultAsync(a => a.UsernameID == user.Id);
+            ViewBag.Saldo = util.Saldo;*/
             return View(apostas);
+
         }
 
         // POST: Apostas/Edit/5
@@ -145,6 +164,9 @@ namespace BetOven.Controllers
             {
                 return NotFound();
             }
+            /*var user = await _userManager.GetUserAsync(User);
+            var util = await _context.Utilizadores.FirstOrDefaultAsync(a => a.UsernameID == user.Id);
+            ViewBag.Saldo = util.Saldo;*/
 
             return View(apostas);
         }

@@ -61,8 +61,8 @@ namespace BetOven.Controllers
                 return NotFound();
             }
             // SELECT * FROM Users WHERE Users.UserId = id
-            var users = await _context.Utilizadores.Where( u => u.UserId == id )
-                                                   .FirstOrDefaultAsync();
+            var users = await _context.Utilizadores.Include(a => a.ListaApostas).Include(a => a.ListaDepositos).Where(u => u.UserId == id)
+                                                    .FirstOrDefaultAsync();
             if (users == null)
             {
                 return NotFound();
