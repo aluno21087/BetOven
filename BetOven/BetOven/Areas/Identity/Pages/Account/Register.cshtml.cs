@@ -66,7 +66,7 @@ namespace BetOven.Areas.Identity.Pages.Account
             [StringLength(20, ErrorMessage = "O {0} não pode ter mais de {1} caracteres")]
             public string Nickname { get; set; }
 
-            [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
+            //[Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
@@ -77,7 +77,7 @@ namespace BetOven.Areas.Identity.Pages.Account
             [Display(Name = "Password")]
             public string Password { get; set; }
 
-            [Required(ErrorMessage = "A {0} é de preenchimento obrigatório")]
+            //[Required(ErrorMessage = "A {0} é de preenchimento obrigatório")]
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "A password e aconfirmation não coincidem")]
@@ -85,7 +85,7 @@ namespace BetOven.Areas.Identity.Pages.Account
 
             [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
             [Display(Name = "Data de Nascimento")]
-            [Required(ErrorMessage = "A {0} é de preenchimento obrigatório")]
+            //[Required(ErrorMessage = "A {0} é de preenchimento obrigatório")]
             public Nullable<System.DateTime> Datanasc { get; set; }
 
             public string Fotografia { get; set; }

@@ -60,8 +60,7 @@
                     @if (User.Identity.IsAuthenticated)
                     {
                         <text>
-                            <a asp-action="Details" asp-route-id="@item.UserId">Detalhes</a> |
-                            <a asp-action="Delete" asp-route-id="@item.UserId">Apagar</a>
+                            <a asp-action="Details" asp-route-id="@item.UserId">Detalhes</a>
                         </text>
                     }
                 </td>

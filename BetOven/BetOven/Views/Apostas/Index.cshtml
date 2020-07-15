@@ -70,9 +70,7 @@
                     @Html.DisplayFor(modelItem => item.Jogo.Njogo)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.ID">Editar</a> |
-                    <a asp-action="Details" asp-route-id="@item.ID">Detalhes</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ID">Apagar</a>
+                    <a asp-action="Details" asp-route-id="@item.ID">Detalhes</a>
                 </td>
             </tr>
         }
