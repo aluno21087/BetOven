@@ -42,8 +42,16 @@ namespace BetOven.Controllers
         [AllowAnonymous] // este anotador anula o efeito da restrição imposta pelo [Authorize]
         public async Task<IActionResult> Index()
         {
-            // SELECT * FROM Utilizadores
-            return View(await _context.Utilizadores.ToListAsync());
+            try
+            {
+                var user = await _userManager.GetUserAsync(User);
+                var util = await _context.Utilizadores.FirstOrDefaultAsync(a => a.UsernameID == user.Id);
+                ViewBag.Saldo = util.Saldo;
+
+                return View(await _context.Utilizadores.ToListAsync());
+            }
+            catch { return View(await _context.Utilizadores.ToListAsync()); }
+
         }
 
         // GET: Users/Details/5
@@ -67,8 +75,13 @@ namespace BetOven.Controllers
             {
                 return NotFound();
             }
+            
+                var user = await _userManager.GetUserAsync(User);
+                var util = await _context.Utilizadores.FirstOrDefaultAsync(a => a.UsernameID == user.Id);
+                ViewBag.Saldo = util.Saldo;
 
-            return View(users);
+                return View(users);
+
         }
 
         // GET: Users/Create

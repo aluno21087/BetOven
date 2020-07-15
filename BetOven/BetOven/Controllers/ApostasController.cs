@@ -27,9 +27,9 @@ namespace BetOven.Controllers
         // GET: Apostas
         public async Task<IActionResult> Index()
         {
-            /* var user = await _userManager.GetUserAsync(User);
-             var util = await _context.Utilizadores.FirstOrDefaultAsync(a => a.UsernameID == user.Id);
-             ViewBag.Saldo = util.Saldo;*/
+            var user = await _userManager.GetUserAsync(User);
+            var util = await _context.Utilizadores.FirstOrDefaultAsync(a => a.UsernameID == user.Id);
+            ViewBag.Saldo = util.Saldo;
             var context = _context.Apostas.Include(a => a.Jogo).Include(a => a.User);
             return View(await context.ToListAsync());
         }
@@ -50,9 +50,9 @@ namespace BetOven.Controllers
             {
                 return NotFound();
             }
-            /*var user = await _userManager.GetUserAsync(User);
+            var user = await _userManager.GetUserAsync(User);
             var util = await _context.Utilizadores.FirstOrDefaultAsync(a => a.UsernameID == user.Id);
-            ViewBag.Saldo = util.Saldo;*/
+            ViewBag.Saldo = util.Saldo;
             return View(apostas);
         }
 

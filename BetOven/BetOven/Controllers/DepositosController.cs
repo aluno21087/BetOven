@@ -27,9 +27,9 @@ namespace BetOven.Controllers
         // GET: Depositos
         public async Task<IActionResult> Index()
         {
-            /* var user = await _userManager.GetUserAsync(User);
-             var util = await _context.Utilizadores.FirstOrDefaultAsync(a => a.UsernameID == user.Id);
-             ViewBag.Saldo = util.Saldo;*/
+            var user = await _userManager.GetUserAsync(User);
+            var util = await _context.Utilizadores.FirstOrDefaultAsync(a => a.UsernameID == user.Id);
+            ViewBag.Saldo = util.Saldo;
             var betOvenDB = _context.Depositos.Include(d => d.User);
             return View(await betOvenDB.ToListAsync());
         }
@@ -49,9 +49,9 @@ namespace BetOven.Controllers
             {
                 return NotFound();
             }
-            /*var user = await _userManager.GetUserAsync(User);
+            var user = await _userManager.GetUserAsync(User);
             var util = await _context.Utilizadores.FirstOrDefaultAsync(a => a.UsernameID == user.Id);
-            ViewBag.Saldo = util.Saldo;*/
+            ViewBag.Saldo = util.Saldo;
             return View(depositos);
         }
 
@@ -59,9 +59,6 @@ namespace BetOven.Controllers
         public async Task<IActionResult> CreateAsync()
         {
             ViewData["UserFK"] = new SelectList(_context.Utilizadores, "UserId", "Email");
-            /* var user = await _userManager.GetUserAsync(User);
-             var util = await _context.Utilizadores.FirstOrDefaultAsync(a => a.UsernameID == user.Id);
-             ViewBag.Saldo = util.Saldo;*/
             return View();
         }
 
@@ -100,9 +97,6 @@ namespace BetOven.Controllers
                 return NotFound();
             }
             ViewData["UserFK"] = new SelectList(_context.Utilizadores, "UserId", "Email", depositos.UserFK);
-            /* var user = await _userManager.GetUserAsync(User);
-             var util = await _context.Utilizadores.FirstOrDefaultAsync(a => a.UsernameID == user.Id);
-             ViewBag.Saldo = util.Saldo;*/
             return View(depositos);
         }
 
@@ -157,9 +151,6 @@ namespace BetOven.Controllers
             {
                 return NotFound();
             }
-            /* var user = await _userManager.GetUserAsync(User);
-             var util = await _context.Utilizadores.FirstOrDefaultAsync(a => a.UsernameID == user.Id);
-             ViewBag.Saldo = util.Saldo;*/
             return View(depositos);
         }
 

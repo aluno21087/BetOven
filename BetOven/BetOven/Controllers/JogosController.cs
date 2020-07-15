@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace BetOven.Controllers
 {
@@ -18,6 +19,7 @@ namespace BetOven.Controllers
     public class JogosController : Controller
     {
         private readonly BetOvenDB _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         /// <summary>
         /// variável que contém os dados do 'ambiente' do servidor. 
@@ -25,15 +27,19 @@ namespace BetOven.Controllers
         /// </summary>
         private readonly IWebHostEnvironment _caminho;
 
-        public JogosController(BetOvenDB context, IWebHostEnvironment caminho)
+        public JogosController(BetOvenDB context, IWebHostEnvironment caminho, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _caminho = caminho;
+            _userManager = userManager;
         }
 
         // GET: Jogos
         public async Task<IActionResult> Index()
         {
+            var user = await _userManager.GetUserAsync(User);
+            var util = await _context.Utilizadores.FirstOrDefaultAsync(a => a.UsernameID == user.Id);
+            ViewBag.Saldo = util.Saldo;
             return View(await _context.Jogos.ToListAsync());
         }
 
@@ -51,7 +57,9 @@ namespace BetOven.Controllers
             {
                 return NotFound();
             }
-
+            var user = await _userManager.GetUserAsync(User);
+            var util = await _context.Utilizadores.FirstOrDefaultAsync(a => a.UsernameID == user.Id);
+            ViewBag.Saldo = util.Saldo;
             return View(jogos);
         }
 
@@ -162,6 +170,7 @@ namespace BetOven.Controllers
         }
 
         // GET: Jogos/Edit/5
+        [Authorize(Roles = "Administrativo")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -182,6 +191,7 @@ namespace BetOven.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrativo")]
         public async Task<IActionResult> Edit(int id, [Bind("Njogo,EquipaA,EquipaB,Resultado,Datainiciojogo")] Jogos jogos)
         {
             if (id != jogos.Njogo)
@@ -213,6 +223,7 @@ namespace BetOven.Controllers
         }
 
         // GET: Jogos/Delete/5
+        [Authorize(Roles = "Administrativo")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -233,6 +244,7 @@ namespace BetOven.Controllers
         // POST: Jogos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrativo")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var jogos = await _context.Jogos.FindAsync(id);
