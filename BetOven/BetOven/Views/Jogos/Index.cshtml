@@ -24,6 +24,9 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.Njogo)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.EquipaA)
             </th>
             <th>
@@ -47,33 +50,36 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EquipaA)
-                </td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.Njogo">
-                        <img src="@Url.Content("~/Imagens/")@item.FotoA" height="60" alt="imagem da equipa @item.EquipaA" title="@item.EquipaA" />
-                    </a>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Resultado)
-                </td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.Njogo">
-                        <img src="@Url.Content("~/Imagens/")@item.FotoB" height="60" alt="imagem da equipa @item.EquipaB" title="@item.EquipaB" />
-                    </a>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EquipaB)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Datainiciojogo)
-                </td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.Njogo">Detalhes</a> 
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Njogo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EquipaA)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Njogo">
+                    <img src="@Url.Content("~/Imagens/")@item.FotoA" height="60" alt="imagem da equipa @item.EquipaA" title="@item.EquipaA" />
+                </a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Resultado)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Njogo">
+                    <img src="@Url.Content("~/Imagens/")@item.FotoB" height="60" alt="imagem da equipa @item.EquipaB" title="@item.EquipaB" />
+                </a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EquipaB)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Datainiciojogo)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Njogo">Detalhes</a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>

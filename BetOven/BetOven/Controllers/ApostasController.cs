@@ -61,9 +61,6 @@ namespace BetOven.Controllers
         {
             ViewData["JogoFK"] = new SelectList(_context.Set<Jogos>(), "Njogo", "Njogo");
             ViewData["UserFK"] = new SelectList(_context.Set<Utilizadores>(), "UserId", "Email");
-            /*var user = await _userManager.GetUserAsync(User);
-            var util = await _context.Utilizadores.FirstOrDefaultAsync(a => a.UsernameID == user.Id);
-            ViewBag.Saldo = util.Saldo;*/
             return View();
         }
 
@@ -104,9 +101,6 @@ namespace BetOven.Controllers
             }
             ViewData["JogoFK"] = new SelectList(_context.Set<Jogos>(), "Njogo", "Njogo", apostas.JogoFK);
             ViewData["UserFK"] = new SelectList(_context.Set<Utilizadores>(), "UserId", "Email", apostas.UserFK);
-            /*var user = await _userManager.GetUserAsync(User);
-            var util = await _context.Utilizadores.FirstOrDefaultAsync(a => a.UsernameID == user.Id);
-            ViewBag.Saldo = util.Saldo;*/
             return View(apostas);
 
         }
@@ -164,10 +158,7 @@ namespace BetOven.Controllers
             {
                 return NotFound();
             }
-            /*var user = await _userManager.GetUserAsync(User);
-            var util = await _context.Utilizadores.FirstOrDefaultAsync(a => a.UsernameID == user.Id);
-            ViewBag.Saldo = util.Saldo;*/
-
+       
             return View(apostas);
         }
 
