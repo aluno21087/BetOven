@@ -16,7 +16,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" enctype="multipart/form-data" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="EquipaA" class="control-label"></label>
@@ -25,7 +25,6 @@
             </div>
             <div class="form-group">
                 <label asp-for="FotoA" class="control-label"></label>
-                @*<input asp-for="Fotografia" class="form-control" />*@
                 <input type="file" name="fotoTeamA" accept=".jpeg,.jpg,.png" style="color:blue;" />
                 <span asp-validation-for="FotoA" class="text-danger"></span>
             </div>
@@ -40,15 +39,14 @@
                 <span asp-validation-for="Resultado" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FotoB" class="control-label"></label>
-                @*<input asp-for="Fotografia" class="form-control" />*@
-                <input type="file" name="fotoTeamB" accept=".jpeg,.jpg,.png" style="color:blue;" />
-                <span asp-validation-for="FotoB" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="EquipaB" class="control-label"></label>
                 <input asp-for="EquipaB" class="form-control" />
                 <span asp-validation-for="EquipaB" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FotoB" class="control-label"></label>
+                <input type="file" name="fotoTeamB" accept=".jpeg,.jpg,.png" style="color:blue;" />
+                <span asp-validation-for="FotoB" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Datainiciojogo" class="control-label"></label>

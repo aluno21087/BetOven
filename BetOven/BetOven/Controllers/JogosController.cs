@@ -79,7 +79,8 @@ namespace BetOven.Controllers
         public async Task<IActionResult> Create([Bind("Njogo,EquipaA,FotografiaA,EquipaB,FotografiaB,Resultado,Datainiciojogo")] Jogos jogo, IFormFile fotoTeamA, IFormFile fotoTeamB)
         {
             // variáveis auxiliares
-            string caminhoCompleto = "";
+            string caminhoCompletoA = "";
+            string caminhoCompletoB = "";
             bool haImagem = false;
 
             if (fotoTeamA == null) { jogo.FotoA = "noTeam.jpg"; }
@@ -96,7 +97,7 @@ namespace BetOven.Controllers
                     string nomeA = g.ToString() + extensao;
 
                     // onde guardar o ficheiro
-                    caminhoCompleto = Path.Combine(_caminho.WebRootPath, "Imagens", nomeA);
+                    caminhoCompletoA = Path.Combine(_caminho.WebRootPath, "Imagens\\Equipas\\", nomeA);
 
                     // associar o nome do ficheiro à equipaA 
                     jogo.FotoA = nomeA;
@@ -126,7 +127,7 @@ namespace BetOven.Controllers
                     string nomeB = g.ToString() + extensao;
 
                     // onde guardar o ficheiro
-                    caminhoCompleto = Path.Combine(_caminho.WebRootPath, "Imagens", nomeB);
+                    caminhoCompletoB = Path.Combine(_caminho.WebRootPath, "Imagens\\Equipas\\", nomeB);
 
                     // associar o nome do ficheiro à equipaA 
                     jogo.FotoB = nomeB;
@@ -150,9 +151,10 @@ namespace BetOven.Controllers
                     await _context.SaveChangesAsync();
                     if (haImagem)
                     {
-                        using var stream = new FileStream(caminhoCompleto, FileMode.Create);
-                        await fotoTeamA.CopyToAsync(stream);
-                        await fotoTeamB.CopyToAsync(stream);
+                        using var streamA = new FileStream(caminhoCompletoA, FileMode.Create);
+                        using var streamB = new FileStream(caminhoCompletoB, FileMode.Create);
+                        await fotoTeamA.CopyToAsync(streamA);
+                        await fotoTeamB.CopyToAsync(streamB);
                     }
                     return RedirectToAction(nameof(Index));
                 }
