@@ -219,9 +219,32 @@ namespace BetOven.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                
             }
-            return View(jogos);
+
+
+            var context = _context.Apostas.Include(a => a.Jogo).Include(a => a.User);
+            var apostas = await _context.Apostas.FirstOrDefaultAsync(a => a.JogoFK == jogos.Njogo);
+            foreach (var item in jogos.ListaApostas)
+            {
+                if(item.Descricao == jogos.Resultado)
+                {
+                    var vencedor = await _context.Utilizadores.FirstOrDefaultAsync(v => v.UserId == item.UserFK);
+                    vencedor.Saldo += item.Quantia * item.Multiplicador;
+                    _context.Update(vencedor);
+                    item.Estado = "Ganha";
+                }
+                else
+                {
+                    item.Estado = "Perdida";
+                }
+                _context.Update(item);
+            }
+            var user = await _userManager.GetUserAsync(User);
+            var util = await _context.Utilizadores.FirstOrDefaultAsync(a => a.UsernameID == user.Id);
+            ViewBag.Saldo = util.Saldo;
+            _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Jogos/Delete/5
