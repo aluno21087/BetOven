@@ -170,7 +170,7 @@ namespace BetOven.Controllers
         }
 
         // GET: Jogos/Edit/5
-        [Authorize(Roles = "Administrativo")]
+        //[Authorize(Roles = "Administrativo")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -191,7 +191,7 @@ namespace BetOven.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrativo")]
+        //[Authorize(Roles = "Administrativo")]
         public async Task<IActionResult> Edit(int id, [Bind("Njogo,EquipaA,EquipaB,Resultado,Datainiciojogo")] Jogos jogos)
         {
             if (id != jogos.Njogo)
