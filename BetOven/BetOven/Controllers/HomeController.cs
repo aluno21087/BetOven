@@ -29,6 +29,7 @@ namespace BetOven.Controllers
 
         public async Task<IActionResult> IndexAsync()
         {
+            //Um try e um catch para quando não houver um utilizador com Saldo, poder retornar a Home page à mesma
             try {
                 var user = await _userManager.GetUserAsync(User);
                 var util = await _context.Utilizadores.FirstOrDefaultAsync(a => a.UsernameID == user.Id);
@@ -40,6 +41,7 @@ namespace BetOven.Controllers
 
         }
 
+        // Na prática não usamos Privacy, mas achámos por bem deixar
         public IActionResult Privacy()
         {
             return View();

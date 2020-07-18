@@ -85,6 +85,11 @@ namespace BetOven.Controllers
         }
 
         // GET: Users/Create
+        /// <summary>
+        /// Criação de um Utilizador
+        /// Apenas é permitido a execução desta tarefa aos Utilizadores com roles Administrativos
+        /// </summary>
+        /// <returns></returns>
         [Authorize(Roles = "Administrativo")]
         public IActionResult Create()
         {
@@ -246,8 +251,14 @@ namespace BetOven.Controllers
         }
 
         // GET: Users/Delete/
+        // GET: Users/Delete/
+        /// <summary>
+        /// Eliminação de Utilizadores
+        /// Apenas é permitida a execução desta tarefa aos Utilizadores com roles Administrativas
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Roles = "Administrador")]
-
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)

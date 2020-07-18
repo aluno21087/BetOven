@@ -12,6 +12,7 @@
 
 <h1>Utilizadores</h1>
 
+@*O utilizador apenas pode criar outros utilizadores caso este seja administrador*@
 
 @if (User.IsInRole("Administrativo"))
 {
@@ -52,11 +53,13 @@
                     @Html.DisplayFor(modelItem => item.Nickname)
                 </td>
                 <td>
+                    @*Apresenta a Fotografia com uma ação que ao clicar na mesma, redireciona para a página "Details" desse mesmo utilizador*@
                     <a asp-action="Details" asp-route-id="@item.UserId">
                         <img src="@Url.Content("~/Imagens/Users/")@item.Fotografia" height="60" alt="imagem do user @item.Nome" title="@item.Nome" />
                     </a>
                 </td>
                 <td>
+                    @*Apenas é permitido ver a página details de um utilizador, caso se esteja logado numa conta*@
                     @if (User.Identity.IsAuthenticated)
                     {
                         <text>

@@ -57,37 +57,58 @@ namespace BetOven.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+            /// <summary>
+            /// Atributo do Nome do Utilizador que é de preenchimento obrigatório
+            /// </summary>
             [Required(ErrorMessage = "O Nome é de preenchimento obrigatório")]
             [StringLength(40, ErrorMessage = "O {0} não pode ter mais de {1} carateres.")]
-            
             public string Nome { get; set; }
 
+            /// <summary>
+            /// Atributo do NickName do Utilizador que é de preenchimento obrigatório
+            /// </summary>
             [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
             [StringLength(20, ErrorMessage = "O {0} não pode ter mais de {1} caracteres")]
             public string Nickname { get; set; }
 
-            //[Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
+            /// <summary>
+            /// Atributo do Email do Utilizador que é de preenchimento obrigatório
+            /// </summary>
+            [Required(ErrorMessage = "O {0} é de preenchimento obrigatório")]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            
+            /// <summary>
+            /// Atributo da Password do Utilizador que tem normas para a sua escolha
+            /// </summary>
             [StringLength(100, ErrorMessage = "A {0} deve ter entre {2} e {1} caracteres.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
 
-            //[Required(ErrorMessage = "A {0} é de preenchimento obrigatório")]
+            /// <summary>
+            /// Campo para colocar novamente a Password como um método de segurança 
+            /// </summary>
+            [Required(ErrorMessage = "A {0} é de preenchimento obrigatório")]
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "A password e aconfirmation não coincidem")]
             public string ConfirmPassword { get; set; }
 
+            /// <summary>
+            /// Atributo da Data de Nascimento do Utilizador que é de preenchimento obrigatório
+            /// e possui normas de construção
+            /// </summary>
             [DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
             [Display(Name = "Data de Nascimento")]
-            //[Required(ErrorMessage = "A {0} é de preenchimento obrigatório")]
+            [Required(ErrorMessage = "A {0} é de preenchimento obrigatório")]
             public Nullable<System.DateTime> Datanasc { get; set; }
 
+            /// <summary>
+            /// Atributo da Fotografia do Utilizador que pode ser nulo
+            /// sendo que deste modo fica com uma foto default
+            /// </summary>
             public string Fotografia { get; set; }
 
         }
@@ -95,23 +116,23 @@ namespace BetOven.Areas.Identity.Pages.Account
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
-            //ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
         public async Task<IActionResult> OnPostAsync(IFormFile fotoUser, string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
-            //ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-
+                //variáveis auxiliares
                 string caminhoCompleto = "";
                 string nomeFoto = "";
                 bool haImagem = false;
 
+                //caso a foto seja nula, o utilizador fica com uma foto de default "noUser.png"
                 if (fotoUser == null) { nomeFoto = "../noUser.png"; }
                 else
                 {
+                    //aceita fotos com extensão .jpeg | .jpg | .png
                     if (fotoUser.ContentType == "image/jpeg" || fotoUser.ContentType == "image/jpg" || fotoUser.ContentType == "image/png")
                     {
 
@@ -122,11 +143,7 @@ namespace BetOven.Areas.Identity.Pages.Account
 
 
                         caminhoCompleto = Path.Combine(_caminho.WebRootPath, "Imagens/Users", nome);
-
-
                         nomeFoto = nome;
-
-
                         haImagem = true;
                     }
                     else
@@ -136,6 +153,7 @@ namespace BetOven.Areas.Identity.Pages.Account
                     }
                 }
 
+                //criação de um novo user na/da ApplicationUser
                 var user = new ApplicationUser
                 {
                     UserName = Input.Email,
@@ -145,7 +163,7 @@ namespace BetOven.Areas.Identity.Pages.Account
                     Timestamp = DateTime.Now
                 };
 
-
+                //criação de um novo user no/do Utilizadores
                 var utilizador = new Utilizadores
                 {
                     Nome = Input.Nome,
@@ -162,18 +180,14 @@ namespace BetOven.Areas.Identity.Pages.Account
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
-
+                //caso seja possível criar o utilizador
                 if (result.Succeeded)
                 {
-
-
                     if (haImagem)
                     {
                         using var stream = new FileStream(caminhoCompleto, FileMode.Create);
                         await fotoUser.CopyToAsync(stream);
                     }
-
-
 
                     _logger.LogInformation("User created a new account with password.");
 
@@ -208,7 +222,7 @@ namespace BetOven.Areas.Identity.Pages.Account
                 }
             }
 
-            // If we got this far, something failed, redisplay form
+            // Caso chegarmos aqui, algo correu mal
             return Page();
         }
     }

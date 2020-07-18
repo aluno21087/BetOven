@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace BetOven.Controllers
 {
+    //Apenas Utilizadores com conta podem aceder aqui às Apostas
     [Authorize]
     public class DepositosController : Controller
     {
@@ -45,10 +46,12 @@ namespace BetOven.Controllers
             var depositos = await _context.Depositos
                 .Include(d => d.User)
                 .FirstOrDefaultAsync(m => m.NDeposito == id);
+
             if (depositos == null)
             {
                 return NotFound();
             }
+
             var user = await _userManager.GetUserAsync(User);
             var util = await _context.Utilizadores.FirstOrDefaultAsync(a => a.UsernameID == user.Id);
             ViewBag.Saldo = util.Saldo;
@@ -56,9 +59,13 @@ namespace BetOven.Controllers
         }
 
         // GET: Depositos/Create
+        // Um utilizador normal se quiser pode criar um depósito para aumentar o seu Saldo
         public async Task<IActionResult> CreateAsync()
         {
             ViewData["UserFK"] = new SelectList(_context.Utilizadores, "UserId", "Email");
+            var user = await _userManager.GetUserAsync(User);
+            var util = await _context.Utilizadores.FirstOrDefaultAsync(a => a.UsernameID == user.Id);
+            ViewBag.Saldo = util.Saldo;
             return View();
         }
 
@@ -69,6 +76,7 @@ namespace BetOven.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("NDeposito,Montante,Data,Formato_pagamento,Origem_deposito,UserFK")] Depositos depositos)
         {
+            //Caso seja possível criar um Depósito, o valor do mesmo será adicionado ao Saldo 
             if (ModelState.IsValid)
             {
                 var user = await _userManager.GetUserAsync(User);
@@ -84,6 +92,8 @@ namespace BetOven.Controllers
         }
 
         // GET: Depositos/Edit/5
+        // Um Utilizador não poderá editar o seu Depósito, visto que é moralmente incorreto
+        [Authorize(Roles = "Administrativo")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -92,6 +102,7 @@ namespace BetOven.Controllers
             }
 
             var depositos = await _context.Depositos.FindAsync(id);
+
             if (depositos == null)
             {
                 return NotFound();
@@ -105,6 +116,7 @@ namespace BetOven.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrativo")]
         public async Task<IActionResult> Edit(int id, [Bind("NDeposito,Montante,Data,Formato_pagamento,Origem_deposito,UserFK")] Depositos depositos)
         {
             if (id != depositos.NDeposito)
@@ -137,6 +149,8 @@ namespace BetOven.Controllers
         }
 
         // GET: Depositos/Delete/5
+        // Tal como Editar, um utilizador não poderá nem deverá eliminar um depósito
+        [Authorize(Roles = "Administrativo")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -147,6 +161,7 @@ namespace BetOven.Controllers
             var depositos = await _context.Depositos
                 .Include(d => d.User)
                 .FirstOrDefaultAsync(m => m.NDeposito == id);
+
             if (depositos == null)
             {
                 return NotFound();
@@ -157,6 +172,7 @@ namespace BetOven.Controllers
         // POST: Depositos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrativo")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var depositos = await _context.Depositos.FindAsync(id);

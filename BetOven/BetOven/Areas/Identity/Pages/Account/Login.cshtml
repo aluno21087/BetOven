@@ -21,16 +21,19 @@
                 <h4>Use a local account to log in.</h4>
                 <hr />
                 <div asp-validation-summary="All" class="text-danger"></div>
+                @*INPUT PARA O EMAIL DO UTILIZADOR*@
                 <div class="form-group">
                     <label asp-for="Input.Email"></label>
                     <input asp-for="Input.Email" class="form-control" />
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
+                @*INPUT PARA A PASSWORD DO UTILIZADOR*@
                 <div class="form-group">
                     <label asp-for="Input.Password"></label>
                     <input asp-for="Input.Password" class="form-control" />
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
+                @*OPÇÃO PARA LEMBRAR OS DADOS DO UTILIZADOR*@
                 <div class="form-group">
                     <div class="checkbox">
                         <label asp-for="Input.RememberMe">

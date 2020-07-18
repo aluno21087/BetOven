@@ -43,14 +43,23 @@ namespace BetOven.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+            /// <summary>
+            /// Atributo de Email do Utilizador
+            /// </summary>
             [Required]
             [EmailAddress]
             public string Email { get; set; }
 
+            /// <summary>
+            /// Atributo de Password do Utilizador
+            /// </summary>
             [Required]
             [DataType(DataType.Password)]
             public string Password { get; set; }
 
+            /// <summary>
+            /// Atributo para guardar/lembrar os dados do Utilizador
+            /// </summary>
             [Display(Name = "Remember me?")]
             public bool RememberMe { get; set; }
         }

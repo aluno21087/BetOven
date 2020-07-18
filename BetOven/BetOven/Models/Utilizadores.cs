@@ -59,14 +59,18 @@ namespace BetOven.Models
         [Required]
         public DateTime Datanasc { get; set; }
 
+        /// <summary>
+        /// Saldo do utilizador
+        /// </summary>
         public double Saldo { get; set; }
 
+        /// <summary>
+        /// Fotografia do utilizador
+        /// </summary>
         public string Fotografia { get; set; }
 
         public virtual ICollection<Depositos> ListaDepositos { get; set; } //lista de depósitos feitos na conta do utilizador
         public virtual ICollection<Apostas> ListaApostas { get; set; } //lista de apostas feitas pelo utilizador
-
-        //*****************************************************************************************************
 
         public string UsernameID { get; set; }
 

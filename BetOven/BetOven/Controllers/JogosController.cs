@@ -64,7 +64,7 @@ namespace BetOven.Controllers
         }
 
         // GET: Jogos/Create
-        //[Authorize(Roles = "Administrativo")]
+        [Authorize(Roles = "Administrativo")]
         public IActionResult Create()
         {
             return View();
@@ -75,7 +75,7 @@ namespace BetOven.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[Authorize(Roles = "Administrativo")]
+        [Authorize(Roles = "Administrativo")]
         public async Task<IActionResult> Create([Bind("Njogo,EquipaA,FotografiaA,EquipaB,FotografiaB,Resultado,Datainiciojogo")] Jogos jogo, IFormFile fotoTeamA, IFormFile fotoTeamB)
         {
             // variáveis auxiliares
@@ -172,12 +172,12 @@ namespace BetOven.Controllers
         }
 
         // GET: Jogos/Edit/5
-        //[Authorize(Roles = "Administrativo")]
+        [Authorize(Roles = "Administrativo")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction("Index", "Home");
             }
 
             var jogos = await _context.Jogos.FindAsync(id);
@@ -193,7 +193,7 @@ namespace BetOven.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[Authorize(Roles = "Administrativo")]
+        [Authorize(Roles = "Administrativo")]
         public async Task<IActionResult> Edit(int id, [Bind("Njogo,EquipaA,EquipaB,Resultado,Datainiciojogo")] Jogos jogos)
         {
             if (id != jogos.Njogo)
@@ -205,6 +205,27 @@ namespace BetOven.Controllers
             {
                 try
                 {
+                    var context = _context.Apostas.Include(a => a.Jogo).Include(a => a.User);
+                    var apostas = await _context.Apostas.FirstOrDefaultAsync(a => a.JogoFK == jogos.Njogo);
+                    foreach (var item in jogos.ListaApostas)
+                    {
+                        if (item.Descricao == jogos.Resultado)
+                        {
+                            var vencedor = await _context.Utilizadores.FirstOrDefaultAsync(v => v.UserId == item.UserFK);
+                            vencedor.Saldo += item.Quantia * item.Multiplicador;
+                            _context.Update(vencedor);
+                            item.Estado = "Ganha";
+                        }
+                        else
+                        {
+                            item.Estado = "Perdida";
+                        }
+                        _context.Update(item);
+                    }
+                    var user = await _userManager.GetUserAsync(User);
+                    var util = await _context.Utilizadores.FirstOrDefaultAsync(a => a.UsernameID == user.Id);
+                    ViewBag.Saldo = util.Saldo;
+                    _context.SaveChangesAsync();
                     _context.Update(jogos);
                     await _context.SaveChangesAsync();
                 }
@@ -219,32 +240,13 @@ namespace BetOven.Controllers
                         throw;
                     }
                 }
-                
+                return RedirectToAction(nameof(Index));
+
             }
 
 
-            var context = _context.Apostas.Include(a => a.Jogo).Include(a => a.User);
-            var apostas = await _context.Apostas.FirstOrDefaultAsync(a => a.JogoFK == jogos.Njogo);
-            foreach (var item in jogos.ListaApostas)
-            {
-                if(item.Descricao == jogos.Resultado)
-                {
-                    var vencedor = await _context.Utilizadores.FirstOrDefaultAsync(v => v.UserId == item.UserFK);
-                    vencedor.Saldo += item.Quantia * item.Multiplicador;
-                    _context.Update(vencedor);
-                    item.Estado = "Ganha";
-                }
-                else
-                {
-                    item.Estado = "Perdida";
-                }
-                _context.Update(item);
-            }
-            var user = await _userManager.GetUserAsync(User);
-            var util = await _context.Utilizadores.FirstOrDefaultAsync(a => a.UsernameID == user.Id);
-            ViewBag.Saldo = util.Saldo;
-            _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            return View(jogos);
         }
 
         // GET: Jogos/Delete/5
