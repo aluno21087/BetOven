@@ -76,7 +76,7 @@ namespace BetOven.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrativo")]
-        public async Task<IActionResult> Create([Bind("Njogo,EquipaA,FotografiaA,EquipaB,FotografiaB,Resultado,Datainiciojogo")] Jogos jogo, IFormFile fotoTeamA, IFormFile fotoTeamB)
+        public async Task<IActionResult> Create([Bind("Njogo,EquipaA,FotoA,EquipaB,FotoB,Resultado,Datainiciojogo")] Jogos jogo, IFormFile fotoTeamA, IFormFile fotoTeamB)
         {
             // variáveis auxiliares
             string caminhoCompletoA = "";
@@ -194,7 +194,7 @@ namespace BetOven.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrativo")]
-        public async Task<IActionResult> Edit(int id, [Bind("Njogo,EquipaA,EquipaB,Resultado,Datainiciojogo")] Jogos jogos)
+        public async Task<IActionResult> Edit(int id, [Bind("Njogo,EquipaA,FotoA,EquipaB,FotoB,Resultado,Datainiciojogo")] Jogos jogos)
         {
             if (id != jogos.Njogo)
             {
@@ -205,15 +205,22 @@ namespace BetOven.Controllers
             {
                 try
                 {
-                    var context = _context.Apostas.Include(a => a.Jogo).Include(a => a.User);
-                    var apostas = await _context.Apostas.FirstOrDefaultAsync(a => a.JogoFK == jogos.Njogo);
-                    foreach (var item in jogos.ListaApostas)
+
+                    var tree = await _context.Jogos.Include(a => a.ListaApostas).FirstOrDefaultAsync(j => j.Njogo == jogos.Njogo);
+
+                    tree.Resultado = jogos.Resultado;
+
+                    //caso queira alterar um atributo
+                    //tree.FotoA = jogos.FotoA;
+
+                    foreach (var item in tree.ListaApostas)
                     {
                         if (item.Descricao == jogos.Resultado)
                         {
                             var vencedor = await _context.Utilizadores.FirstOrDefaultAsync(v => v.UserId == item.UserFK);
                             vencedor.Saldo += item.Quantia * item.Multiplicador;
                             _context.Update(vencedor);
+                           // await _context.SaveChangesAsync();
                             item.Estado = "Ganha";
                         }
                         else
@@ -221,12 +228,12 @@ namespace BetOven.Controllers
                             item.Estado = "Perdida";
                         }
                         _context.Update(item);
+                        //await _context.SaveChangesAsync();
                     }
                     var user = await _userManager.GetUserAsync(User);
                     var util = await _context.Utilizadores.FirstOrDefaultAsync(a => a.UsernameID == user.Id);
                     ViewBag.Saldo = util.Saldo;
-                    _context.SaveChangesAsync();
-                    _context.Update(jogos);
+                    _context.Update(tree);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -243,8 +250,6 @@ namespace BetOven.Controllers
                 return RedirectToAction(nameof(Index));
 
             }
-
-
 
             return View(jogos);
         }

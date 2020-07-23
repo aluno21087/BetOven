@@ -81,14 +81,16 @@ namespace BetOven.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Quantia,Data,Estado,Descricao,Multiplicador,UserFK,JogoFK")] Apostas apostas)
+        public async Task<IActionResult> Create([Bind("ID,Quantia,Estado,Descricao,Multiplicador,UserFK,JogoFK")] Apostas apostas)
         {
             //caso o modelo seja válido e se faça uma aposta, retira-se o valor da aposta ao Saldo do utilizador
             if (ModelState.IsValid)
             {
+                apostas.Data = DateTime.Now;
                 var user = await _userManager.GetUserAsync(User);
                 var util = await _context.Utilizadores.FirstOrDefaultAsync(a => a.UsernameID == user.Id);
                 util.Saldo -= apostas.Quantia;
+                apostas.UserFK = util.UserId;
                 _context.Update(util);
                 _context.Add(apostas);
                 await _context.SaveChangesAsync();
@@ -178,7 +180,7 @@ namespace BetOven.Controllers
             {
                 return NotFound();
             }
-       
+
             return View(apostas);
         }
 

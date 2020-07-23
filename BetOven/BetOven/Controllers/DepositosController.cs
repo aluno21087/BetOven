@@ -31,7 +31,7 @@ namespace BetOven.Controllers
             var user = await _userManager.GetUserAsync(User);
             var util = await _context.Utilizadores.FirstOrDefaultAsync(a => a.UsernameID == user.Id);
             ViewBag.Saldo = util.Saldo;
-            var betOvenDB = _context.Depositos.Include(d => d.User);
+            var betOvenDB = _context.Depositos.Include(a => a.User).Where(a => a.UserFK == util.UserId);
             return View(await betOvenDB.ToListAsync());
         }
 
@@ -81,6 +81,7 @@ namespace BetOven.Controllers
             {
                 var user = await _userManager.GetUserAsync(User);
                 var util = await _context.Utilizadores.FirstOrDefaultAsync(u => u.UsernameID == user.Id);
+                depositos.UserFK = util.UserId;
                 util.Saldo += depositos.Montante;
                 _context.Update(util);
                 _context.Add(depositos);
