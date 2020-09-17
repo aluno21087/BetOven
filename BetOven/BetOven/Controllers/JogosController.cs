@@ -15,10 +15,19 @@ using Microsoft.AspNetCore.Identity;
 
 namespace BetOven.Controllers
 {
+    //Authorização refere-se como um processo que determina o que um utilizador é capaz de fazer
+    //No caso dos Jogos, apenas seria competente um utilizador autorizado conseguir ver que tipos de jogos existem para apostar
     [Authorize]
     public class JogosController : Controller
     {
+        /// <summary>
+        /// esta é a variável que identifica a nossa Base de Dados do projeto
+        /// </summary>
         private readonly BetOvenDB _context;
+
+        /// <summary>
+        /// variável que tem o objetivo de recolher os dados de uma pessoa que está autenticada
+        /// </summary>
         private readonly UserManager<ApplicationUser> _userManager;
 
         /// <summary>
@@ -35,6 +44,10 @@ namespace BetOven.Controllers
         }
 
         // GET: Jogos
+        /// <summary>
+        /// lista os dados dos jogos no ecrã
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -44,26 +57,46 @@ namespace BetOven.Controllers
         }
 
         // GET: Jogos/Details/5
+        /// <summary>
+        /// mostra os detalhes de um jogo
+        /// mostra:
+        /// as fotos de ambas as equipas;
+        /// o nome de ambas as equipas;
+        /// o resultado do jogo, caso tenha terminado;
+        /// data de início do jogo.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
-                return NotFound();
+                //caso o id seja nulo retorna-se à página Index dos Jogos
+                return RedirectToAction("Index", "Jogos");
             }
 
             var jogos = await _context.Jogos
                 .FirstOrDefaultAsync(m => m.Njogo == id);
+
             if (jogos == null)
             {
-                return NotFound();
+                //caso nao seja possivel encontrar um "jogo" retorna-se à página Index dos Jogos
+                return RedirectToAction("Index", "Jogos");
             }
+            //para poder ver a ViewBag com o Saldo do Utilizador
             var user = await _userManager.GetUserAsync(User);
             var util = await _context.Utilizadores.FirstOrDefaultAsync(a => a.UsernameID == user.Id);
             ViewBag.Saldo = util.Saldo;
+
+            //retorna a vista dos Jogos
             return View(jogos);
         }
 
         // GET: Jogos/Create
+        /// <summary>
+        /// a criação de um jogo cabe aos administradores
+        /// </summary>
+        /// <returns></returns>
         [Authorize(Roles = "Administrativo")]
         public IActionResult Create()
         {
@@ -71,8 +104,19 @@ namespace BetOven.Controllers
         }
 
         // POST: Jogos/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// serve para criar um jogo por parte do Administrador
+        /// para tal se suceder é necessário:
+        /// o nome da equipa A
+        /// o nome da equipa B
+        /// foto da equipa A
+        /// foto da equipa B
+        /// data do início do evento
+        /// </summary>
+        /// <param name="jogo"></param>
+        /// <param name="fotoTeamA"></param>
+        /// <param name="fotoTeamB"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrativo")]
@@ -83,9 +127,13 @@ namespace BetOven.Controllers
             string caminhoCompletoB = "";
             bool haImagem = false;
 
+            // será que há fotografia?
+            //    - caso não exista, é adicionada uma imagem "por defeito" que será igual para todas as equipas
+            //      que não possuam uma fotografia exemplificativa 
             if (fotoTeamA == null) { jogo.FotoA = "noTeam.jpg"; }
             else
             {
+                //as extensões aceites são ".jpeg"; ".jpg" e ".png"
                 if (fotoTeamA.ContentType == "image/jpeg" || fotoTeamA.ContentType == "image/jpg" || fotoTeamA.ContentType == "image/png")
                 {
                     // o ficheiro é uma imagem válida
@@ -108,11 +156,13 @@ namespace BetOven.Controllers
                 else
                 {
                     // há imagem, mas não é do tipo correto
+                    // então coloca-se a imagem "padrão"
                     jogo.FotoA = "noTeam.png";
                 }
 
             }
 
+            // o mesmo processo só que desta vez para a equipa B
             if (fotoTeamB == null) { jogo.FotoB = "noTeam.jpg"; }
             else
             {
@@ -149,6 +199,8 @@ namespace BetOven.Controllers
                 {
                     _context.Add(jogo);
                     await _context.SaveChangesAsync();
+
+                    // se há imagem, vou guardá-la no disco rígido
                     if (haImagem)
                     {
                         using var streamA = new FileStream(caminhoCompletoA, FileMode.Create);
@@ -158,39 +210,52 @@ namespace BetOven.Controllers
                     }
                     return RedirectToAction(nameof(Index));
                 }
+
+                // caso este catch seja executado, houve algo que correu mal no processo
                 catch (Exception e)
                 {
                     Console.WriteLine(e.StackTrace);
 
                 }
 
-                /*_context.Add(jogo);
-                await _context.SaveChangesAsync();*/
                 return RedirectToAction(nameof(Index));
             }
             return View(jogo);
         }
 
         // GET: Jogos/Edit/5
+        /// <summary>
+        /// edição dos dados de um jogo por parte do Administrador
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Roles = "Administrativo")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
-                return RedirectToAction("Index", "Home");
+                //caso o id seja nulo retorna-se à página Index dos Jogos
+                return RedirectToAction("Index", "Jogos");
             }
 
             var jogos = await _context.Jogos.FindAsync(id);
             if (jogos == null)
             {
-                return NotFound();
+                //caso nao seja possivel identificar o jogo retorna-se à página Index dos Jogos
+                return RedirectToAction("Index", "Jogos");
             }
             return View(jogos);
         }
 
         // POST: Jogos/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// apenas um administrador poderá editar os detalhes de um jogo
+        /// é também através da edição que um administrador coloca o resultado 
+        /// do jogo/evento, por essa razão apenas cabe ao admin fazer a edição
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="jogos"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrativo")]
@@ -198,14 +263,16 @@ namespace BetOven.Controllers
         {
             if (id != jogos.Njogo)
             {
-                return NotFound();
+                //caso o id não seja igual retorna-se à página Index dos Jogos
+                return RedirectToAction("Index", "Jogos");
             }
 
             if (ModelState.IsValid)
             {
                 try
                 {
-
+                    // após a edição de um jogo e ser colocado o resultado do mesmo é necessário tomar 
+                    // medidas para que quem apostou corretamente no resultado de um jogo seja recompensado
                     var tree = await _context.Jogos.Include(a => a.ListaApostas).FirstOrDefaultAsync(j => j.Njogo == jogos.Njogo);
 
                     tree.Resultado = jogos.Resultado;
@@ -218,14 +285,14 @@ namespace BetOven.Controllers
                         if (item.Descricao == jogos.Resultado)
                         {
                             var vencedor = await _context.Utilizadores.FirstOrDefaultAsync(v => v.UserId == item.UserFK);
-                            vencedor.Saldo += item.Quantia * item.Multiplicador;
+                            vencedor.Saldo += item.Quantia * item.Multiplicador; //caso o utilizador tenha vencido, este recebe o valor apostado multiplicado pelo bonus (multiplicador)
                             _context.Update(vencedor);
                            // await _context.SaveChangesAsync();
-                            item.Estado = "Ganha";
+                            item.Estado = "Ganha"; //o estado da aposta fica "Ganha"
                         }
                         else
                         {
-                            item.Estado = "Perdida";
+                            item.Estado = "Perdida"; //caso tenha perdido a aposta perde o dinheiro e aparece o estado "Perdida"
                         }
                         _context.Update(item);
                         //await _context.SaveChangesAsync();
@@ -240,7 +307,8 @@ namespace BetOven.Controllers
                 {
                     if (!JogosExists(jogos.Njogo))
                     {
-                        return NotFound();
+                        //caso nao seja possivel aceder ao jogo retorna-se à página Index dos Jogos
+                        return RedirectToAction("Index", "Jogos");
                     }
                     else
                     {
@@ -255,25 +323,38 @@ namespace BetOven.Controllers
         }
 
         // GET: Jogos/Delete/5
+        /// <summary>
+        /// apagar um jogo caso ocorra algum problema
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [Authorize(Roles = "Administrativo")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
-                return NotFound();
+                //caso o id seja nulo retorna-se à página Index dos Jogos
+                return RedirectToAction("Index", "Jogos");
             }
 
             var jogos = await _context.Jogos
                 .FirstOrDefaultAsync(m => m.Njogo == id);
             if (jogos == null)
             {
-                return NotFound();
+                //caso nao seja possivel aceder ao jogo retorna-se à página Index dos Jogos
+                return RedirectToAction("Index", "Jogos");
             }
 
             return View(jogos);
         }
 
         // POST: Jogos/Delete/5
+        /// <summary>
+        /// serve para apagar um jogo
+        /// apenas um administrador poderá executar tal tarefa
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrativo")]

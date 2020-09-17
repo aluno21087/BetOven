@@ -15,7 +15,15 @@ namespace BetOven.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+
+        /// <summary>
+        /// variável que identifica a BD do nosso projeto
+        /// </summary>
         private readonly BetOvenDB _context;
+
+        /// <summary>
+        /// recolhe os dados de uma pessoa que está autenticada
+        /// </summary>
         private readonly UserManager<ApplicationUser> _userManager;
 
 

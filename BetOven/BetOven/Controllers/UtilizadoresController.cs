@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace BetOven.Controllers
 {
+    // todos os métodos desta classe ficam protegidos. Só pessoas autorizadas têm acesso.
     [Authorize]
     public class UtilizadoresController : Controller
     {
@@ -29,6 +30,9 @@ namespace BetOven.Controllers
         /// </summary>
         private readonly IWebHostEnvironment _caminho;
 
+        /// <summary>
+        /// variável que tem o objetivo de recolher os dados de uma pessoa que está autenticada
+        /// </summary>
         private readonly UserManager<ApplicationUser> _userManager;
 
         public UtilizadoresController(BetOvenDB context, IWebHostEnvironment caminho, UserManager<ApplicationUser> userManager)
@@ -39,6 +43,11 @@ namespace BetOven.Controllers
         }
 
         // GET: Utilizadores
+        /// <summary>
+        /// lista os dados de um Utilizador no ecrã
+        /// um utilizador não autenticado poderá ver este ecrã
+        /// </summary>
+        /// <returns></returns>
         [AllowAnonymous] // este anotador anula o efeito da restrição imposta pelo [Authorize]
         public async Task<IActionResult> Index()
         {
@@ -66,20 +75,24 @@ namespace BetOven.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                //caso o id seja nulo retorna-se à página Index dos Utilizadores
+                return RedirectToAction("Index", "Utilizadores");
             }
             // SELECT * FROM Users WHERE Users.UserId = id
             var users = await _context.Utilizadores.Include(a => a.ListaApostas).Include(a => a.ListaDepositos).Where(u => u.UserId == id)
                                                     .FirstOrDefaultAsync();
             if (users == null)
             {
-                return NotFound();
+                //caso nao seja possivel aceder a um utilizador retorna-se à página Index dos Utilizadores
+                return RedirectToAction("Index", "Utilizadores");
             }
-            
+
+                //para poder ver a ViewBag com o Saldo do Utilizador
                 var user = await _userManager.GetUserAsync(User);
                 var util = await _context.Utilizadores.FirstOrDefaultAsync(a => a.UsernameID == user.Id);
                 ViewBag.Saldo = util.Saldo;
 
+                // retorna a vista dos Utilizadores
                 return View(users);
 
         }
@@ -97,8 +110,14 @@ namespace BetOven.Controllers
         }
 
         // POST: Users/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// a criação de um utilzador requer alguns atributos
+        /// nomeadamente:
+        /// nome, email, nickname, nacionalidade, data de nascimento, saldo inicial, fotografia
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="fotoUser"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrativo")]
@@ -108,9 +127,13 @@ namespace BetOven.Controllers
             string caminhoCompleto = "";
             bool haImagem = false;
 
+            // será que há fotografia?
+            //    - caso não exista, é adicionada uma imagem "por defeito" que será igual para todos os utilizadores
+            //      que não possuam uma fotografia exemplificativa 
             if (fotoUser == null) { user.Fotografia = "noUser.png"; }
             else
             {
+                //as extensões aceites são ".jpeg"; ".jpg" e ".png"
                 if (fotoUser.ContentType=="image/jpeg" || fotoUser.ContentType == "image/jpg" || fotoUser.ContentType == "image/png")
                 {
                     // o ficheiro é uma imagem válida
@@ -133,6 +156,7 @@ namespace BetOven.Controllers
                 else
                 {
                     // há imagem, mas não é do tipo correto
+                    // então coloca-se a imagem "padrão"
                     user.Fotografia = "noUser.png";
                 }
             }
@@ -143,6 +167,8 @@ namespace BetOven.Controllers
                 {
                     _context.Add(user);
                     await _context.SaveChangesAsync();
+
+                    // se há imagem, vou guardá-la no disco rígido
                     if (haImagem)
                     {
                         using var stream = new FileStream(caminhoCompleto, FileMode.Create);
@@ -150,6 +176,8 @@ namespace BetOven.Controllers
                     }
                     return RedirectToAction(nameof(Index));
                 }
+
+                // caso este catch seja executado, houve algo que correu mal no processo
                 catch (Exception e)
                 {
                     Console.WriteLine(e.StackTrace);
@@ -160,37 +188,53 @@ namespace BetOven.Controllers
         }
 
         // GET: Users/Edit/5
+        /// <summary>
+        /// edição dos dados de um utilizador
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
-                return NotFound();
+                //caso o id seja nulo retorna-se à página Index dos Utilizadores
+                return RedirectToAction("Index", "Utilizadores");
             }
 
             var users = await _context.Utilizadores.FindAsync(id);
             if (users == null)
             {
-                return NotFound();
+                //caso nao seja possivel identificar o utilizador retorna-se à página Index dos Jogos
+                return RedirectToAction("Index", "Utilizadores");
             }
             return View(users);
         }
 
         // POST: Users/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// serve para editar os dados de um utilzador
+        /// não é apenas permitido aos administradores uma vez
+        /// que os utilizadores têm de ter esse direito
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="user"></param>
+        /// <param name="fotoUser"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("UserId,Nome,Email,Nickname,Nacionalidade,Datanasc,Saldo,Fotografia")] Utilizadores user, IFormFile fotoUser)
         {
             if (id != user.UserId)
             {
-                return NotFound();
+                //caso o id não seja igual retorna-se à página Index dos Utilizadores
+                return RedirectToAction("Index", "Utilizadores");
             }
 
             // variáveis auxiliares
             string caminhoCompleto = "";
             bool haImagem = false;
 
+            // o mesmo processo da criação de utilizadores aplica-se aqui na edição 
             if (fotoUser == null) { user.Fotografia = "noUser.png"; }
             else
             {
@@ -226,6 +270,8 @@ namespace BetOven.Controllers
                 {
                     _context.Update(user);
                     await _context.SaveChangesAsync();
+
+                    // se há imagem, vou guardá-la no disco rígido
                     if (haImagem)
                     {
                         using var stream = new FileStream(caminhoCompleto, FileMode.Create);
@@ -238,7 +284,8 @@ namespace BetOven.Controllers
                 {
                     if (!UsersExists(user.UserId))
                     {
-                        return NotFound();
+                        //se chegarmos a este ponto sem sucesso, retorna-se à página Index dos Utilizadores
+                        return RedirectToAction("Index", "Utilizadores");
                     }
                     else
                     {
@@ -251,7 +298,6 @@ namespace BetOven.Controllers
         }
 
         // GET: Users/Delete/
-        // GET: Users/Delete/
         /// <summary>
         /// Eliminação de Utilizadores
         /// Apenas é permitida a execução desta tarefa aos Utilizadores com roles Administrativas
@@ -263,20 +309,29 @@ namespace BetOven.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                //caso o id seja nulo retorna-se à página Index dos Utilizadores
+                return RedirectToAction("Index", "Utilizadores");
             }
 
             var users = await _context.Utilizadores
                 .FirstOrDefaultAsync(m => m.UserId == id);
             if (users == null)
             {
-                return NotFound();
+                //caso nao seja possivel aceder ao jogo retorna-se à página Index dos Utilizadores
+                return RedirectToAction("Index", "Utilizadores");
             }
 
             return View(users);
         }
 
         // POST: Users/Delete/5
+        /// <summary>
+        /// serve para apagar um utilizador 
+        /// um utilizador nao autorizado nao o poderá fazer uma vez que 
+        /// não cumpre as regras gerais de um projeto com autenticação
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Administrador")]
