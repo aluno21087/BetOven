@@ -48,6 +48,9 @@ namespace BetOven.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
+            /// <summary>
+            /// Atributo de Novo Email do Utilizador
+            /// </summary>
             [Required]
             [EmailAddress]
             [Display(Name = "New email")]
@@ -94,6 +97,7 @@ namespace BetOven.Areas.Identity.Pages.Account.Manage
             }
 
             var email = await _userManager.GetEmailAsync(user);
+            //se o novo email for diferente do email antigo
             if (Input.NewEmail != email)
             {
                 var userId = await _userManager.GetUserIdAsync(user);

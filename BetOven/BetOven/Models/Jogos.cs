@@ -58,7 +58,6 @@ namespace BetOven.Models
         [Display(Name = "Data de início")]
         public DateTime Datainiciojogo { get; set; }
 
-
         public virtual ICollection<Apostas> ListaApostas { get; set; } //lista de apostas feitas num jogo
     }
 }

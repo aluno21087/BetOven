@@ -52,6 +52,7 @@ namespace BetOven.Models
 
         public Apostas() 
         {
+            //Atribuição de valor estático ao Multiplicador das Apostas
             Multiplicador = 2;
         }
     }
