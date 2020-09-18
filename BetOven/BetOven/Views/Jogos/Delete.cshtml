@@ -4,65 +4,67 @@
     ViewData["Title"] = "Delete";
 }
 
-<br />
-<br />
-<br />
-<br />
-<br />
+    <div class="container">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
 
-<h1>Apagar</h1>
-<br />
-<h3>Tem a certeza de que quer eliminar este jogo?</h3>
-<div>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.EquipaA)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.EquipaA)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FotoA)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FotoA)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Resultado)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Resultado)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FotoB)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.FotoB)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.EquipaB)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.EquipaB)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Datainiciojogo)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Datainiciojogo)
-        </dd>
-    </dl>
+        <h1>Apagar</h1>
+        <br />
+        <h3>Tem a certeza de que quer eliminar este jogo?</h3>
+        <div>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.EquipaA)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.EquipaA)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.FotoA)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.FotoA)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Resultado)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Resultado)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.FotoB)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.FotoB)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.EquipaB)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.EquipaB)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Datainiciojogo)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Datainiciojogo)
+                </dd>
+            </dl>
 
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Njogo" />
-        <input type="submit" value="Apagar" class="btn btn-danger" /> |
-        <a asp-action="Index">Voltar à lista</a>
-    </form>
-</div>
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="Njogo" />
+                <input type="submit" value="Apagar" class="btn btn-danger" /> |
+                <a asp-action="Index">Voltar à lista</a>
+            </form>
+        </div>
 
-<br />
-<br />
-<br />
-<br />
-<br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+    </div>

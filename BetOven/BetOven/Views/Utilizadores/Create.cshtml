@@ -4,74 +4,76 @@
     ViewData["Title"] = "Create";
 }
 
-<br />
-<br />
-<br />
-<br />
-<br />
+    <div class="container">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
 
-<h1>Criar um novo User</h1>
+        <h1>Criar um novo User</h1>
 
-<h4>Users</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create" enctype="multipart/form-data" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Nome" class="control-label"></label>
-                <input asp-for="Nome" class="form-control" />
-                <span asp-validation-for="Nome" class="text-danger"></span>
+        <h4>Users</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="Create" enctype="multipart/form-data" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Nome" class="control-label"></label>
+                        <input asp-for="Nome" class="form-control" />
+                        <span asp-validation-for="Nome" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Nickname" class="control-label"></label>
+                        <input asp-for="Nickname" class="form-control" />
+                        <span asp-validation-for="Nickname" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Nacionalidade" class="control-label"></label>
+                        <input asp-for="Nacionalidade" class="form-control" />
+                        <span asp-validation-for="Nacionalidade" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Datanasc" class="control-label"></label>
+                        <input asp-for="Datanasc" class="form-control" />
+                        <span asp-validation-for="Datanasc" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Saldo" class="control-label"></label>
+                        <input asp-for="Saldo" class="form-control" />
+                        <span asp-validation-for="Saldo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Fotografia" class="control-label"></label>
+                        @*<input asp-for="Fotografia" class="form-control" />*@
+                        <input type="file" name="fotoUser" accept=".jpeg,.jpg,.png" style="color:blue;" />
+                        <span asp-validation-for="Fotografia" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Criar" class="btn btn-primary" />
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Nickname" class="control-label"></label>
-                <input asp-for="Nickname" class="form-control" />
-                <span asp-validation-for="Nickname" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Nacionalidade" class="control-label"></label>
-                <input asp-for="Nacionalidade" class="form-control" />
-                <span asp-validation-for="Nacionalidade" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Datanasc" class="control-label"></label>
-                <input asp-for="Datanasc" class="form-control" />
-                <span asp-validation-for="Datanasc" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Saldo" class="control-label"></label>
-                <input asp-for="Saldo" class="form-control" />
-                <span asp-validation-for="Saldo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Fotografia" class="control-label"></label>
-                @*<input asp-for="Fotografia" class="form-control" />*@
-                <input type="file" name="fotoUser" accept=".jpeg,.jpg,.png" style="color:blue;" />
-                <span asp-validation-for="Fotografia" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Criar" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
+
+        <div>
+            <a asp-action="Index">Regressar à lista</a>
+        </div>
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+
+
+        @section Scripts {
+            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        }
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Regressar à lista</a>
-</div>
-
-<br />
-<br />
-<br />
-<br />
-<br />
-
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

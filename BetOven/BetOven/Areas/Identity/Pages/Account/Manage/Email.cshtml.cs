@@ -11,20 +11,24 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 
 namespace BetOven.Areas.Identity.Pages.Account.Manage
 {
     public partial class EmailModel : PageModel
     {
+        private readonly BetOvenDB _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
 
         public EmailModel(
+            BetOvenDB context,
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender)
         {
+            _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
@@ -93,6 +97,17 @@ namespace BetOven.Areas.Identity.Pages.Account.Manage
             if (Input.NewEmail != email)
             {
                 var userId = await _userManager.GetUserIdAsync(user);
+
+                //para alterar o email do utilizador
+                var util = await _context.Utilizadores.FirstOrDefaultAsync(u => u.UsernameID == user.Id);
+                util.Email = Input.NewEmail;
+                _context.Update(util);
+                await _context.SaveChangesAsync();
+                user.Email = Input.NewEmail;
+                user.UserName = Input.NewEmail;
+                await _userManager.UpdateAsync(user);
+
+
                 var code = await _userManager.GenerateChangeEmailTokenAsync(user, Input.NewEmail);
                 var callbackUrl = Url.Page(
                     "/Account/ConfirmEmailChange",

@@ -4,57 +4,59 @@
     ViewData["Title"] = "Details";
 }
 
-<br />
-<br />
-<br />
-<br />
-<br />
+    <div class="container">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
 
-<h1>Detalhes</h1>
+        <h1>Detalhes</h1>
 
-<div>
-    <h4>Jogos</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FotoA)
-        </dt>
-        <dd class="col-sm-10">
-            <img src="~/Imagens/Equipas/@Model.FotoA" height="200" alt="imagem da equipa @Model.EquipaA" title="@Model.EquipaA" />
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.EquipaA)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.EquipaA)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Resultado)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Resultado)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.FotoB)
-        </dt>
-        <dd class="col-sm-10">
-            <img src="~/Imagens/Equipas/@Model.FotoB" height="200" alt="imagem da equipa @Model.EquipaB" title="@Model.EquipaB" />
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.EquipaB)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.EquipaB)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Datainiciojogo)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Datainiciojogo)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Njogo">Editar</a> |
-    <a asp-action="Index">Voltar à lista</a>
-</div>
+        <div>
+            <h4>Jogos</h4>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.FotoA)
+                </dt>
+                <dd class="col-sm-10">
+                    <img src="~/Imagens/Equipas/@Model.FotoA" height="200" alt="imagem da equipa @Model.EquipaA" title="@Model.EquipaA" />
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.EquipaA)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.EquipaA)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Resultado)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Resultado)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.FotoB)
+                </dt>
+                <dd class="col-sm-10">
+                    <img src="~/Imagens/Equipas/@Model.FotoB" height="200" alt="imagem da equipa @Model.EquipaB" title="@Model.EquipaB" />
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.EquipaB)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.EquipaB)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Datainiciojogo)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Datainiciojogo)
+                </dd>
+            </dl>
+        </div>
+        <div>
+            <a asp-action="Edit" asp-route-id="@Model.Njogo">Editar</a> |
+            <a asp-action="Index">Voltar à lista</a>
+        </div>
+    </div>

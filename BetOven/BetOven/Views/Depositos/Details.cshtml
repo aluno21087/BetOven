@@ -4,51 +4,53 @@
     ViewData["Title"] = "Details";
 }
 
-<br />
-<br />
-<br />
-<br />
-<br />
+    <div class="container">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
 
 
-<h1>Detalhes</h1>
+        <h1>Detalhes</h1>
 
-<div>
-    <h4>Depósitos</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Montante)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Montante)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Formato_pagamento)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Formato_pagamento)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Origem_deposito)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Origem_deposito)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.Email)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Index">Voltar à lista</a>
-</div>
+        <div>
+            <h4>Depósitos</h4>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Montante)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Montante)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Formato_pagamento)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Formato_pagamento)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Origem_deposito)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Origem_deposito)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.User)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.User.Email)
+                </dd>
+            </dl>
+        </div>
+        <div>
+            <a asp-action="Index">Voltar à lista</a>
+        </div>
 
-<br />
-<br />
-<br />
-<br />
-<br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+    </div>

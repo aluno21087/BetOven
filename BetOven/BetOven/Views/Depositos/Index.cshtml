@@ -4,66 +4,68 @@
     ViewData["Title"] = "Index";
 }
 
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
+    <div class="container">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
 
-<h1>Depósitos</h1>
+        <h1>Depósitos</h1>
 
-<p>
-    <a asp-action="Create">Novo Depósito</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Montante)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Formato_pagamento)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Origem_deposito)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Montante)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Formato_pagamento)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Origem_deposito)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.User.Email)
-                </td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.NDeposito">Detalhes</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+        <p>
+            <a asp-action="Create">Novo Depósito</a>
+        </p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Montante)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Formato_pagamento)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Origem_deposito)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.User)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Montante)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Formato_pagamento)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Origem_deposito)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.User.Email)
+                        </td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@item.NDeposito">Detalhes</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
 
 
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
-<br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+    </div>

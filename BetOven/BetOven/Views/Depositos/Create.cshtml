@@ -10,53 +10,54 @@
     //string EmailUser = (await UserManager.GetUserAsync(User)).Id;
 }
 
-<br />
-<br />
-<br />
-<br />
-<br />
+    <div class="container">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
 
-<h1>Efetuar um Depósito</h1>
+        <h1>Efetuar um Depósito</h1>
 
-<h4>Depósitos</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Montante" class="control-label"></label>
-                <input asp-for="Montante" class="form-control" />
-                <span asp-validation-for="Montante" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Formato_pagamento" class="control-label">Selecione um método de pagamento</label>
-                <select asp-for="Formato_pagamento">
-                    <option value="MultiBanco">MultiBanco</option>
-                    <option value="MB Way">MB Way</option>
-                    <option value="VISA">VISA</option>
-                    <option value="PayPal">PayPal</option>
-                    <option value="PaySafe Card">PaySafe Card</option>
-                    <option value="Master Card">Master Card</option>
-                </select>
-                <span asp-validation-for="Formato_pagamento" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Origem_deposito" class="control-label"></label>
-                <select asp-for="Origem_deposito">
-                    <option value="Santander Totta">Santander Totta</option>
-                    <option value="Novo Banco">Novo Banco</option>
-                    <option value="Millenium">Millenium</option>
-                    <option value="Banco BIC">Banco BIC</option>
-                    <option value="BBVA">BBVA</option>
-                    <option value="CGD">CGD</option>
-                </select>
-                <span asp-validation-for="Origem_deposito" class="text-danger"></span>
-            </div>
-            <div class="form-group" hidden>
-                <label asp-for="UserFK" class="control-label"></label>
-                <select asp-for="UserFK" class="form-control" asp-items="ViewBag.UserFK"></select>
-            </div>
+        <h4>Depósitos</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Montante" class="control-label"></label>
+                        <input asp-for="Montante" class="form-control" />
+                        <span asp-validation-for="Montante" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Formato_pagamento" class="control-label">Selecione um método de pagamento</label>
+                        <select asp-for="Formato_pagamento">
+                            <option value="MultiBanco">MultiBanco</option>
+                            <option value="MB Way">MB Way</option>
+                            <option value="VISA">VISA</option>
+                            <option value="PayPal">PayPal</option>
+                            <option value="PaySafe Card">PaySafe Card</option>
+                            <option value="Master Card">Master Card</option>
+                        </select>
+                        <span asp-validation-for="Formato_pagamento" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Origem_deposito" class="control-label"></label>
+                        <select asp-for="Origem_deposito">
+                            <option value="Santander Totta">Santander Totta</option>
+                            <option value="Novo Banco">Novo Banco</option>
+                            <option value="Millenium">Millenium</option>
+                            <option value="Banco BIC">Banco BIC</option>
+                            <option value="BBVA">BBVA</option>
+                            <option value="CGD">CGD</option>
+                        </select>
+                        <span asp-validation-for="Origem_deposito" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" hidden>
+                        <label asp-for="UserFK" class="control-label"></label>
+                        <select asp-for="UserFK" class="form-control" asp-items="ViewBag.UserFK"></select>
+                    </div>
                     <div class="form-group">
                         <input type="submit" value="Criar" class="btn btn-primary" />
                     </div>
@@ -78,7 +79,7 @@
         <br />
         <br />
         <br />
-
+    </div>
 
 
 

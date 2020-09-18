@@ -4,59 +4,61 @@
     ViewData["Title"] = "Delete";
 }
 
-<br />
-<br />
-<br />
-<br />
-<br />
+    <div class="container">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
 
-<h1>Apagar</h1>
-<br />
-<h3>Tem a certeza de que quer eliminar este depósito?</h3>
-<div>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Montante)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Montante)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Data)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Data)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Formato_pagamento)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Formato_pagamento)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Origem_deposito)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Origem_deposito)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.Email)
-        </dd>
-    </dl>
+        <h1>Apagar</h1>
+        <br />
+        <h3>Tem a certeza de que quer eliminar este depósito?</h3>
+        <div>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Montante)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Montante)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Data)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Data)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Formato_pagamento)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Formato_pagamento)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Origem_deposito)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.Origem_deposito)
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.User)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.User.Email)
+                </dd>
+            </dl>
 
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="NDeposito" />
-        <input type="submit" value="Apagar" class="btn btn-danger" /> |
-        <a asp-action="Index">Voltar à lista</a>
-    </form>
-</div>
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="NDeposito" />
+                <input type="submit" value="Apagar" class="btn btn-danger" /> |
+                <a asp-action="Index">Voltar à lista</a>
+            </form>
+        </div>
 
-<br />
-<br />
-<br />
-<br />
-<br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+    </div>

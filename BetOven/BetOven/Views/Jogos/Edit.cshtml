@@ -4,73 +4,75 @@
     ViewData["Title"] = "Edit";
 }
 
-<br />
-<br />
-<br />
-<br />
-<br />
+    <div class="container">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
 
-<h1>Editar</h1>
+        <h1>Editar</h1>
 
-<h4>Jogos</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Njogo" />
-            <div class="form-group">
-                <label asp-for="EquipaA" class="control-label"></label>
-                <input asp-for="EquipaA" class="form-control" />
-                <span asp-validation-for="EquipaA" class="text-danger"></span>
+        <h4>Jogos</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Njogo" />
+                    <div class="form-group">
+                        <label asp-for="EquipaA" class="control-label"></label>
+                        <input asp-for="EquipaA" class="form-control" />
+                        <span asp-validation-for="EquipaA" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" hidden>
+                        <label asp-for="FotoA" class="control-label"></label>
+                        <input asp-for="FotoA" class="form-control" />
+                        <span asp-validation-for="FotoA" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Resultado" class="control-label">Resultado do Jogo</label>
+                        <select asp-for="Resultado">
+                            <option value="-----">-</option>
+                            <option value="EquipaA">Equipa da Casa Vence</option>
+                            <option value="Empate">Empate</option>
+                            <option value="EquipaB">Equipa Visitante Vence</option>
+                        </select>
+                        <span asp-validation-for="Resultado" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" hidden>
+                        <label asp-for="FotoB" class="control-label"></label>
+                        <input asp-for="FotoB" class="form-control" />
+                        <span asp-validation-for="FotoB" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EquipaB" class="control-label"></label>
+                        <input asp-for="EquipaB" class="form-control" />
+                        <span asp-validation-for="EquipaB" class="text-danger"></span>
+                    </div>
+                    <div class="form-group" hidden>
+                        <label asp-for="Datainiciojogo" class="control-label"></label>
+                        <input asp-for="Datainiciojogo" class="form-control" />
+                        <span asp-validation-for="Datainiciojogo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    </div>
+                </form>
             </div>
-            <div class="form-group" hidden>
-                <label asp-for="FotoA" class="control-label"></label>
-                <input asp-for="FotoA" class="form-control" />
-                <span asp-validation-for="FotoA" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Resultado" class="control-label">Resultado do Jogo</label>
-                <select asp-for="Resultado">
-                    <option value="-----">-</option>
-                    <option value="EquipaA">Equipa da Casa Vence</option>
-                    <option value="Empate">Empate</option>
-                    <option value="EquipaB">Equipa Visitante Vence</option>
-                </select>
-                <span asp-validation-for="Resultado" class="text-danger"></span>
-            </div>
-            <div class="form-group" hidden>
-                <label asp-for="FotoB" class="control-label"></label>
-                <input asp-for="FotoB" class="form-control" />
-                <span asp-validation-for="FotoB" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EquipaB" class="control-label"></label>
-                <input asp-for="EquipaB" class="form-control" />
-                <span asp-validation-for="EquipaB" class="text-danger"></span>
-            </div>
-            <div class="form-group" hidden>
-                <label asp-for="Datainiciojogo" class="control-label"></label>
-                <input asp-for="Datainiciojogo" class="form-control" />
-                <span asp-validation-for="Datainiciojogo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
+
+        <div>
+            <a asp-action="Index">Voltar à lista</a>
+        </div>
+
+        @section Scripts {
+            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        }
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Voltar à lista</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
-
-<br />
-<br />
-<br />
-<br />
-<br />

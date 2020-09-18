@@ -4,57 +4,59 @@
     ViewData["Title"] = "Edit";
 }
 
-<br />
-<br />
-<br />
-<br />
-<br />
+    <div class="container">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
 
-<h1>Editar</h1>
+        <h1>Editar</h1>
 
-<h4>Depósitos</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="NDeposito" />
-            <div class="form-group">
-                <label asp-for="Montante" class="control-label"></label>
-                <input asp-for="Montante" class="form-control" />
-                <span asp-validation-for="Montante" class="text-danger"></span>
+        <h4>Depósitos</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="NDeposito" />
+                    <div class="form-group">
+                        <label asp-for="Montante" class="control-label"></label>
+                        <input asp-for="Montante" class="form-control" />
+                        <span asp-validation-for="Montante" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Data" class="control-label"></label>
+                        <input asp-for="Data" class="form-control" />
+                        <span asp-validation-for="Data" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Formato_pagamento" class="control-label"></label>
+                        <input asp-for="Formato_pagamento" class="form-control" />
+                        <span asp-validation-for="Formato_pagamento" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Origem_deposito" class="control-label"></label>
+                        <input asp-for="Origem_deposito" class="form-control" />
+                        <span asp-validation-for="Origem_deposito" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="UserFK" class="control-label"></label>
+                        <select asp-for="UserFK" class="form-control" asp-items="ViewBag.UserFK"></select>
+                        <span asp-validation-for="UserFK" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="Data" class="control-label"></label>
-                <input asp-for="Data" class="form-control" />
-                <span asp-validation-for="Data" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Formato_pagamento" class="control-label"></label>
-                <input asp-for="Formato_pagamento" class="form-control" />
-                <span asp-validation-for="Formato_pagamento" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Origem_deposito" class="control-label"></label>
-                <input asp-for="Origem_deposito" class="form-control" />
-                <span asp-validation-for="Origem_deposito" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UserFK" class="control-label"></label>
-                <select asp-for="UserFK" class="form-control" asp-items="ViewBag.UserFK"></select>
-                <span asp-validation-for="UserFK" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
+
+        <div>
+            <a asp-action="Index">Voltar à lista</a>
+        </div>
+
+        @section Scripts {
+            @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        }
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Voltar à lista</a>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
